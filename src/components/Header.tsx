@@ -1,0 +1,18 @@
+import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import { css } from "../../styled-system/css";
+import { mainColor, white } from "@/style/color";
+
+export default function Header() {
+    return(
+        <>
+            <header style={{backgroundColor: mainColor}} className={css({width:'100%',height:'52px'})}>
+                <div className={css({margin:'0 auto',width:'85%',height:'100%',display:'flex',justifyContent:'space-between',alignItems:'center'})}>
+                    <Image src="/nameLogo.svg" alt="STOOK Aide" width={96} height={22}/>
+                    <FontAwesomeIcon icon={faBell} style={{color: white}} className={css({width:'25px',height:'25px'})} />
+                </div>
+            </header>
+        </>
+    )
+}

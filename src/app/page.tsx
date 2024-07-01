@@ -2,10 +2,12 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { css } from "../../styled-system/css";
+import RankingBtn from "@/components/RankingBtn";
 
 export default function Home() {
-  
   return (
-    <div className={css({ fontSize: "2xl", fontWeight: 'bold' })}>Hello 🐼!</div>
+    <main>
+      <RankingBtn/>
+    </main>
   );
 }

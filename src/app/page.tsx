@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { css } from "../../styled-system/css";
 import RankingBtn from "@/components/RankingBtn";
 import Link from "next/link";
-import Coupon from "@/components/Coupon";
 
 const RankingProps = [
   {
@@ -25,7 +24,19 @@ export default function Home() {
       {RankingProps.map((RankingProp,index) => {
         return<RankingBtn key={index} {...RankingProp}/>
       })}
-      <Coupon/>
+        <section className={css({width:'330px',margin:'75px auto 0'})}>
+            <h3>キャンペーン・お得情報</h3>
+            <Link href="#">
+                <div className={css({
+                    width:'330px',
+                    height:'116px',
+                    bgImage:'url(/coupon.svg)',
+                    bgPosition: 'center',
+                    position:'relative',
+                })}>
+            </div>
+            </Link>
+        </section>
     </main>
   );
 }

@@ -23,6 +23,12 @@ export default function Home() {
       {RankingProps.map((RankingProp,index) => {
         return<RankingBtn key={index} {...RankingProp}/>
       })}
+      <section>
+        <h3>キャンペーン・お得情報</h3>
+        <div className={css({width:'330px',height:'116px',background:'url()'})}>
+
+        </div>
+      </section>
     </main>
   );
 }

@@ -6,4 +6,12 @@ body{
 }
 main{
     margin-top: 52px;
+    width: 100%;
+}
+
+@media (min-width: 960px) {
+    main{
+        width: 390px;
+        margin: 52px auto 0;
+    }    
 }

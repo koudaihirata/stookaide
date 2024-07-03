@@ -19,7 +19,7 @@ const RankingProps = [
 
 export default function Home() {
   return (
-    <main className={css({width:'100%',height:'50vh',background:'linear-gradient(180deg, #FFCE7B 58.71%, #FFF 100%)',position:'relative',marginTop:'52px'})}>
+    <main className={css({width:'100%',height:'50vh',background:'linear-gradient(180deg, #FFCE7B 58.71%, #FFF 100%)',position:'relative'})}>
       {RankingProps.map((RankingProp,index) => {
         return<RankingBtn key={index} {...RankingProp}/>
       })}

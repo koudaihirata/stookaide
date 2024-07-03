@@ -3,7 +3,7 @@
 export default function RankingPage() {
     return(
         <>
-            <main>aaa</main>
+            <main>RankingPage</main>
         </>
     )
 }

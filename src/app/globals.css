@@ -6,12 +6,13 @@ body{
 }
 main{
     margin-top: 52px;
+    margin-bottom: 120px;
     width: 100%;
 }
 
 @media (min-width: 960px) {
     main{
         width: 390px;
-        margin: 52px auto 0;
+        margin: 52px auto 120px;
     }    
 }

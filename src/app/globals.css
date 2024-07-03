@@ -1,1 +1,6 @@
 @layer reset, base, tokens, recipes, utilities;
+
+body{
+    font-family: "Hiragino Kaku Gothic Pro",sans-serif;
+    color: #333;
+}

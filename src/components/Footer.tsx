@@ -22,7 +22,7 @@ export default function Footer() {
                             <p className={css({fontSize:'18px'})} style={{color:white}}>撮影</p>
                         </div>
                     </Link>
-                    <Link href="#">
+                    <Link href="/Recipe">
                         <div className={css({width:'67px',height:'67px',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',bg:'linear-gradient(180deg, #FFCE7B 0%, #FAA755 100%)',transform:'translateY(15px)'})}>
                             <FontAwesomeIcon icon={faUtensils} className={css({fontSize:'24px'})} style={{color:white}}/>
                             <p className={css({fontSize:'14px'})} style={{color:white}}>レシピ</p>

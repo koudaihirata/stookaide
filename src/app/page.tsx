@@ -60,14 +60,36 @@ export default function Home() {
         <h3 className={css({fontWeight:'bold'})}>あなたの地域の余り物</h3>
         <div className={css({width:'100%',display:'flex',justifyContent:'space-between',marginTop:'6px'})}>
           <Link href="#">
-            <div className={css({width:'160px',height:'150px',borderRadius:'8px',textAlign:'center',lineHeight:'150px',fontSize:'24px',fontWeight:'bold',bg:'#666'})}>
+            <div className={css({
+              width:'160px',
+              height:'150px',
+              borderRadius:'8px',
+              textAlign:'center',
+              lineHeight:'150px',
+              fontSize:'24px',
+              fontWeight:'bold',
+              bgImage:'url(/AdobeStock_784631179.jpg)',
+              bgPosition: 'center',
+              bgSize:'cover'
+              })}>
               <div className={css({width:'100%',height:'100%',bg:'#666/25',borderRadius:'8px'})}>
                 <p style={{color:white}}>都道府県</p>
               </div>
             </div>
           </Link>
           <Link href="#">
-            <div className={css({width:'160px',height:'150px',borderRadius:'8px',textAlign:'center',lineHeight:'150px',fontSize:'24px',fontWeight:'bold',bg:'#666'})}>
+            <div className={css({
+              width:'160px',
+              height:'150px',
+              borderRadius:'8px',
+              textAlign:'center',
+              lineHeight:'150px',
+              fontSize:'24px',
+              fontWeight:'bold',
+              bgImage:'url(/AdobeStock_724935013.jpg)',
+              bgPosition: 'center',
+              bgSize:'cover'
+              })}>
               <div className={css({width:'100%',height:'100%',bg:'#666/25',borderRadius:'8px'})}>
                 <p style={{color:white}}>近くの地域</p>
               </div>

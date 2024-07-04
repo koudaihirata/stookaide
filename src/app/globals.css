@@ -9,6 +9,10 @@ main{
     padding-bottom: 150px;
     width: 100%;
 }
+#Responsive{
+    width: 100%;
+    height: 52px;
+}
 
 @media (min-width: 960px) {
     body{
@@ -19,5 +23,10 @@ main{
         margin: 52px auto 0px;
         padding-bottom: 160px;
         background-color: white;
-    }    
+    }
+    #Responsive{
+        width: 390px;
+        height: 52px;
+        margin: 0 auto;
+    }
 }

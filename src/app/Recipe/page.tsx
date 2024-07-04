@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { css } from '../../../styled-system/css';
 import Link from 'next/link';
+import { subColor, white } from '@/style/color';
 
 type Recipe = {
     image: string;
@@ -100,6 +101,7 @@ export default function Recipe() {
             let recipeUrl = `https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&categoryId=${row.categoryId}`;
             let res = await fetch(recipeUrl);
             let jsonData = await res.json();
+            console.log(jsonData);
             let recipes = jsonData.result;
         
             recipes.forEach((recipe:any) => {
@@ -124,18 +126,21 @@ export default function Recipe() {
     return (
         <main>
             <div className={css({width:'85%',margin:'0 auto'})}>
+                <form onSubmit={handleSearch} className={css({p:'24px 0 24px',display:'flex',alignItems:'center',justifyContent:'center'})}>
+                    <div className={css({width:'300px',height:'40px',rounded:'35px',border:'1.5px solid #FAA755',display:'flex',alignItems:'center'})}>
+                        <input
+                            type="text"
+                            value={keyword}
+                            onChange={(e) => setKeyword(e.target.value)}
+                            placeholder="キーワードを入力"
+                            className={css({width:'80%',height:'100%',pl:'14px',rounded:'35px 0 0 35px',outline:'none'})}
+                        />
+                        <button type="submit" className={css({width:'20%',height:'98%',rounded:'0 35px 35px 0',transform:'translateX(-1px)'})} style={{backgroundColor:subColor,color:white}}>検索</button>
+                    </div>
+                </form>
                 <section className={css({width:'100%',height:'30px',borderBottom:'2px solid #333',display:'flex',alignItems:'center'})}>
                     <h2>レシピ一覧</h2>
                 </section>
-                <form onSubmit={handleSearch}>
-                    <input
-                        type="text"
-                        value={keyword}
-                        onChange={(e) => setKeyword(e.target.value)}
-                        placeholder="キーワードを入力"
-                    />
-                    <button type="submit">検索</button>
-                </form>
                 {loading ? (
                 <p>Loading...</p>
                 ) : (

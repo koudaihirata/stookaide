@@ -6,13 +6,18 @@ body{
 }
 main{
     margin-top: 52px;
-    margin-bottom: 120px;
+    padding-bottom: 150px;
     width: 100%;
 }
 
 @media (min-width: 960px) {
+    body{
+        background-color: dodgerblue;
+    }
     main{
         width: 390px;
-        margin: 52px auto 120px;
+        margin: 52px auto 0px;
+        padding-bottom: 160px;
+        background-color: white;
     }    
 }

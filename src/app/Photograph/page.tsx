@@ -2,19 +2,19 @@
 import { useState, useEffect } from 'react';
 
 export default function Photograph() {
-    const translations: { [key: string]: string } = {
-        'apple': 'りんご',
-        'banana': 'バナナ',
-        'carrot': 'にんじん',
-        'orange': 'オレンジ',
-        'tomato': 'トマト',
-        'person': '人間'
-        // 必要に応じて他の翻訳を追加
-    };
-
     const [detectedObjects, setDetectedObjects] = useState<Set<string>>(new Set<string>());
 
     useEffect(() => {
+        const translations: { [key: string]: string } = {
+            'apple': 'りんご',
+            'banana': 'バナナ',
+            'carrot': 'にんじん',
+            'orange': 'オレンジ',
+            'tomato': 'トマト',
+            'person': '人間'
+            // 必要に応じて他の翻訳を追加
+        };
+    
         const fetchDetections = async () => {
             try {
                 const response = await fetch('http://localhost:5001/results');
@@ -39,8 +39,8 @@ export default function Photograph() {
 
     return (
         <main>
-            <h1>リアルタイムオブジェクト検出</h1>
-            <img id="videoFeed" src="http://localhost:5001/detect" alt="ビデオフィード" style={{ width: '640px', height: '480px', backgroundColor: 'black' }} />
+            <h2>食材をカメラに移してください</h2>
+            <img id="videoFeed" src="http://localhost:5001/detect" alt="ビデオフィード" style={{ width: '100%', height: '480px', backgroundColor: 'black' }} />
             <h2>検出結果:</h2>
             <ul>
                 {Array.from(detectedObjects).map((obj, index) => <li key={index}>{obj}</li>)}

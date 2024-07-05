@@ -16,7 +16,7 @@ export default function Footer() {
                             <p className={css({fontSize:'14px'})} style={{color:white}}>ホーム</p>
                         </div>
                     </Link>
-                    <Link href="#">
+                    <Link href="/Photograph">
                         <div className={css({width:'86px',height:'86px',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',bg:'linear-gradient(180deg, #FFCE7B 0%, #FAA755 100%)',transform:'translateY(-10px)'})}>
                             <FontAwesomeIcon icon={faCamera} className={css({fontSize:'32px'})} style={{color:white}}/>
                             <p className={css({fontSize:'18px'})} style={{color:white}}>撮影</p>

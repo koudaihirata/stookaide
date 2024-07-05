@@ -20,7 +20,12 @@ export default function Photograph() {
                 const response = await fetch('http://localhost:5001/results');
                 const detectedObjects: string[] = await response.json();
                 
-                const newDetectedObjects = new Set<string>(detectedObjects.map((obj: string) => translations[obj] || obj));
+                // 翻訳が存在するオブジェクトのみをセットに追加
+                const newDetectedObjects = new Set<string>(
+                    detectedObjects
+                        .filter((obj: string) => translations.hasOwnProperty(obj))
+                        .map((obj: string) => translations[obj])
+                );
                 setDetectedObjects(prevObjects => new Set<string>([...prevObjects, ...newDetectedObjects]));
             } catch (error) {
                 console.error('Error fetching detections:', error);

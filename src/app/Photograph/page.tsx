@@ -57,7 +57,7 @@ export default function Photograph() {
     };
 
     const handleSearchRecipes = () => {
-        router.push('/Recipe');
+        router.push('/Photograph/SuggestionsRecipe');
     };
 
     const handleAddNewObject = () => {

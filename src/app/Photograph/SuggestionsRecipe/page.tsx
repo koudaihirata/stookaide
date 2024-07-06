@@ -64,7 +64,7 @@ export default function SuggestionsRecipe() {
     return (
         <main className={css({ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' })}>
             <Progressbar width={80} percent={percent} />
-            <div className={css({ width: '80%', height: '480px',m:'5px auto 0', position: 'relative' })}>
+            <div className={css({ width: '80%', height: '450px',m:'5px auto 0', position: 'relative' })}>
                 {data.map((item, index) => (
                     <TinderCard
                     ref={childRefs[index]}
@@ -92,10 +92,18 @@ export default function SuggestionsRecipe() {
                     </TinderCard>
                 ))}
             </div>
-            <div className={css({ display: 'flex', justifyContent: 'space-around', width: '80%', m: '0 auto' })} style={{backgroundColor:accentColor,color:white}}>
-                <FontAwesomeIcon icon={faThumbsDown} size="2x" onClick={() => swipe('left')} className={css({ cursor: 'pointer' })} />
-                <FontAwesomeIcon icon={faUndo} size="2x" onClick={goBack} className={css({ cursor: 'pointer' })} />
-                <FontAwesomeIcon icon={faThumbsUp} size="2x" onClick={() => swipe('right')} className={css({ cursor: 'pointer' })} />
+            <div className={css({width: '80%', m: '10px auto',position:'relative'})}>
+                <div className={css({ display: 'flex',alignItems:'center', justifyContent: 'space-around',width:'100%',position:'absolute',top:'-32px' })} style={{color:white}}>
+                    <div onClick={() => swipe('left')} className={css({ cursor: 'pointer',width:'65px',height:'65px',rounded:'50%',display: 'flex', alignItems:'center', justifyContent: 'space-around' })} style={{backgroundColor:accentColor}}>
+                        <FontAwesomeIcon icon={faThumbsDown} size="2x"/>
+                    </div>
+                    <div onClick={goBack} className={css({ cursor: 'pointer',width:'60px',height:'60px',rounded:'50%',display: 'flex', alignItems:'center', justifyContent: 'space-around' })} style={{backgroundColor:accentColor}}>
+                        <FontAwesomeIcon icon={faUndo} size="2x"/>
+                    </div>
+                    <div onClick={() => swipe('right')} className={css({ cursor: 'pointer',width:'65px',height:'65px',rounded:'50%',display: 'flex', alignItems:'center', justifyContent: 'space-around' })} style={{backgroundColor:accentColor}}>
+                        <FontAwesomeIcon icon={faThumbsUp} size="2x"/>
+                    </div>
+                </div>
             </div>
         </main>
     );

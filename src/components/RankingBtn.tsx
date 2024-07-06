@@ -13,7 +13,7 @@ type RankingProps = {
 export default function RankingBtn(props:RankingProps) {
     return(
         <>
-            <p style={{color:white}} className={css({width:'330px',margin:'0 auto',paddingTop:'22px'})}><span className={css({fontSize:'20px'})}>{props.User}</span>{props.query}</p>
+            <p style={{color:white}} className={css({width:'330px',margin:'0 auto',paddingTop:'22px'})}><span className={css({fontSize:'20px',fontWeight:'bold'})}>{props.User}</span>{props.query}</p>
             <section className={css({width:'330px',height:'120px',margin:'0 auto',border:'3px solid #FAA755',borderRadius:'8px',background:'white'})}>
                 <h2 className={css({width:'100%',height:'70%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'28px',fontWeight:'bold'})}>{props.One}</h2>
                 <Link href="/RankingPage" className={css({display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%',height:'30%',borderTop:'2px solid #FAA755'})}>

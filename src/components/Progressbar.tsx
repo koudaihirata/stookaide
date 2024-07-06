@@ -1,3 +1,4 @@
+import { accentColor } from '@/style/color';
 import React from 'react';
 
 type ProgressbarProps = {
@@ -10,7 +11,7 @@ const Progressbar: React.FC<ProgressbarProps> = ({ width, percent }) => {
 
   return (
     <div style={{ width: `${width}%`, backgroundColor: '#e0e0df', borderRadius: '8px', overflow: 'hidden',marginTop:'10px'}}>
-      <div style={{ width: progressWidth, backgroundColor: '#76c7c0', height: '20px' }} />
+      <div style={{ width: progressWidth, backgroundColor: accentColor, height: '20px' }} />
     </div>
   );
 };

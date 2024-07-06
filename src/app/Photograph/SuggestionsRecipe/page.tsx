@@ -1,24 +1,102 @@
-"use client"
+"use client";
+import React, { useState, useRef, useMemo } from 'react';
 import TinderCard from 'react-tinder-card';
+import Progressbar from '../../../components/Progressbar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp, faThumbsDown, faUndo } from '@fortawesome/free-solid-svg-icons';
+import { css } from '../../../../styled-system/css';
+import { accentColor, white } from '@/style/color';
+
+const data = [
+    { color: 'red', name: 'Red' },
+    { color: 'blue', name: 'Blue' },
+    { color: 'green', name: 'Green' }
+];
 
 export default function SuggestionsRecipe() {
-    const data = ['red', 'blue', 'green'];
-  
-    const swiped = (direction: string, color: string) => {
-      console.log('You swiped ' + direction + ' on ' + color)
-    }
-  
-    const outOfFrame = (color: string) => {
-      console.log(color + ' has left the screen')
-    }
+    const [lastDirection, setLastDirection] = useState<string>();
+    const [currentIndex, setCurrentIndex] = useState<number>(data.length - 1);
+    const [percent, setPercent] = useState<number>(0);
+
+    const currentIndexRef = useRef(currentIndex);
+
+    const childRefs = useMemo<any>(
+        () => Array(data.length).fill(0).map((i) => React.createRef()),
+        [data.length]
+    );
+
+    const progressbarCalclation = (val: number) => {
+        const result = 1 - (val + 1) / data.length;
+        setPercent(result);
+    };
+
+    const updateCurrentIndex = async (val: number) => {
+        setCurrentIndex(val);
+        currentIndexRef.current = val;
+        progressbarCalclation(val);
+    };
+
+    const canGoBack = currentIndex < data.length - 1;
+    const canSwipe = currentIndex >= 0;
+
+    const goBack = async () => {
+        if (!canGoBack) return;
+        const newIndex = currentIndex + 1;
+        updateCurrentIndex(newIndex);
+        await childRefs[newIndex].current.restoreCard();
+    };
+
+    const swipe = async (direction: string) => {
+        if (canSwipe && currentIndex < data.length) {
+            await childRefs[currentIndex].current.swipe(direction);
+        }
+    };
+
+    const swiped = (direction: string, index: number) => {
+        setLastDirection(direction);
+        updateCurrentIndex(index - 1);
+    };
+
+    const outOfFrame = (index: number) => {
+        currentIndexRef.current >= index && childRefs[index].current.restoreCard();
+    };
+
     return (
-      <main>
-        {data.map((color, index) => (
-          <TinderCard key={index} onSwipe={(dir) => swiped(dir, color)} onCardLeftScreen={() => outOfFrame(color)}>
-            <div style={{backgroundColor: color}}>
-              {color}
+        <main className={css({ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' })}>
+            <Progressbar width={80} percent={percent} />
+            <div className={css({ width: '80%', height: '480px',m:'5px auto 0', position: 'relative' })}>
+                {data.map((item, index) => (
+                    <TinderCard
+                    ref={childRefs[index]}
+                    key={item.name}
+                    onSwipe={(dir) => swiped(dir, index)}
+                    onCardLeftScreen={() => outOfFrame(index)}
+                    className={css({position:'absolute',top:'0',left:'0',width:'100%',height:'100%'})}
+                    >
+                        <div
+                        style={{ backgroundColor: item.color, }}
+                        className={css({
+                            borderRadius: '10px', 
+                            boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2)',
+                            color: '#fff',
+                            fontSize: '24px',
+                            fontWeight: 'bold',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width:'100%',
+                            height:'100%'
+                        })}>
+                            {item.name}
+                        </div>
+                    </TinderCard>
+                ))}
             </div>
-          </TinderCard>
-        ))}
-      </main>  
-    );}
+            <div className={css({ display: 'flex', justifyContent: 'space-around', width: '80%', m: '0 auto' })} style={{backgroundColor:accentColor,color:white}}>
+                <FontAwesomeIcon icon={faThumbsDown} size="2x" onClick={() => swipe('left')} className={css({ cursor: 'pointer' })} />
+                <FontAwesomeIcon icon={faUndo} size="2x" onClick={goBack} className={css({ cursor: 'pointer' })} />
+                <FontAwesomeIcon icon={faThumbsUp} size="2x" onClick={() => swipe('right')} className={css({ cursor: 'pointer' })} />
+            </div>
+        </main>
+    );
+}

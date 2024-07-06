@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { subColor, white } from '@/style/color';
 import Image from 'next/image';
 import LoadingBar from '../../components/LoadingBar';
+import LoadingAnimation from '@/components/LoadingAnimation/LoadingAnimation';
 
 type Recipe = {
     image: string;
@@ -166,9 +167,9 @@ export default function Recipe() {
                 </section>
                 {loading ? (
                     <div className={css({width:'100%',height:'55vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'})}>
+                        <LoadingAnimation/>
                         <LoadingBar percent={percent} />
-                        <p className={css({textAlign:'center',mt:'20px',mb:'15px',fontWeight:'bold',fontSize:'32px'})}>検索中...</p>
-                        <Image src='/sutokkun.svg' alt='ストッくん' width={180} height={240}/>
+                        <Image src='/sutokkun.svg' alt='ストッくん' width={180} height={240} id='sutokkunAnimation'/>
                     </div>
                 ) : (
                 <ul id="recipe_list">

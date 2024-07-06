@@ -13,10 +13,32 @@ main{
     width: 100%;
     height: 52px;
 }
+#sutokkunAnimation{
+    transform-origin: center bottom;
+    animation: sutokkunAnimation 3s alternate infinite ease;
+}
+@keyframes sutokkunAnimation{
+    0%{
+        transform: rotate(0deg);
+    }
+    40%{
+        transform: rotate(25deg);
+    }
+    80%{
+        transform: rotate(-25deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
+}
 
 @media (min-width: 960px) {
     body{
-        background-color: dodgerblue;
+        background-color: #FFC;
+        background-image: url(../../public/pcbg.svg);
+        background-repeat: repeat;
+        background-attachment: fixed; /* 背景を固定 */
+        background-size: cover;
     }
     main{
         width: 390px;

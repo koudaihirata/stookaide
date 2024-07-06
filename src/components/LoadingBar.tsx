@@ -8,7 +8,7 @@ type LoadingBarProps = {
 
 const LoadingBar: React.FC<LoadingBarProps> = ({ percent }) => {
   return (
-    <div style={{ width: '80%', backgroundColor: '#e0e0df', borderRadius: '8px', overflow: 'hidden' }}>
+    <div style={{ width: '80%', backgroundColor: '#e0e0df', borderRadius: '8px', overflow: 'hidden',margin:'10px 0'}}>
       <div
         style={{
           width: `${percent}%`,

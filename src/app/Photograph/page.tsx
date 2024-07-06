@@ -1,5 +1,6 @@
 "use client"; 
 import { useState, useEffect } from 'react';
+import { css } from '../../../styled-system/css';
 
 export default function Photograph() {
     const [detectedObjects, setDetectedObjects] = useState<Set<string>>(new Set<string>());
@@ -39,7 +40,7 @@ export default function Photograph() {
 
     return (
         <main>
-            <h2>食材をカメラに移してください</h2>
+            <h2 className={css({fontSize:'20px',fontWeight:'bold',textAlign:'center'})}>食材をカメラに移してください</h2>
             <img id="videoFeed" src="http://localhost:5001/detect" alt="ビデオフィード" style={{ width: '100%', height: '480px', backgroundColor: 'black' }} />
             <h2>検出結果:</h2>
             <ul>

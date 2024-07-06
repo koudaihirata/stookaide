@@ -1,22 +1,24 @@
 "use client";
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useState, useRef, useMemo, useEffect, Suspense } from 'react';
 import TinderCard from 'react-tinder-card';
 import Progressbar from '../../../components/Progressbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faThumbsDown, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { css } from '../../../../styled-system/css';
 import { accentColor, white } from '@/style/color';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
-export default function SuggestionsRecipe() {
+function SuggestionsRecipeComponent() {
     const [lastDirection, setLastDirection] = useState<string>();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [percent, setPercent] = useState<number>(0);
     const [data, setData] = useState<any[]>([]);
     const [keywords, setKeywords] = useState<string[]>([]);
+    const [warning, setWarning] = useState<string | null>(null); // 警告メッセージの状態を追加
 
     const currentIndexRef = useRef(currentIndex);
     const searchParams = useSearchParams();
+    const router = useRouter();
 
     const childRefs = useMemo<React.RefObject<any>[]>(
         () => Array(data.length).fill(0).map((i) => React.createRef()),
@@ -69,12 +71,12 @@ export default function SuggestionsRecipe() {
         const fetchKeywords = () => {
             const objects = searchParams.get('objects');
             const detectedObjects = objects ? objects.split(',') : [];
-            setKeywords(detectedObjects.length > 0 ? detectedObjects : ["牛肉"]);
+            setKeywords(detectedObjects.length > 0 ? detectedObjects : ["牛肉", "鶏肉", "豚肉"]);
         };
-    
+
         fetchKeywords();
     }, [searchParams]);
-    
+
     useEffect(() => {
         const fetchData = async () => {
             if (keywords.length === 0) return;
@@ -194,5 +196,13 @@ export default function SuggestionsRecipe() {
                 </div>
             </div>
         </main>
+    );
+}
+
+export default function SuggestionsRecipe() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SuggestionsRecipeComponent />
+        </Suspense>
     );
 }

@@ -93,15 +93,15 @@ export default function SuggestionsRecipe() {
                 ))}
             </div>
             <div className={css({width: '80%', m: '10px auto',position:'relative'})}>
-                <div className={css({ display: 'flex',alignItems:'center', justifyContent: 'space-around',width:'100%',position:'absolute',top:'-32px' })} style={{color:white}}>
-                    <div onClick={() => swipe('left')} className={css({ cursor: 'pointer',width:'65px',height:'65px',rounded:'50%',display: 'flex', alignItems:'center', justifyContent: 'space-around' })} style={{backgroundColor:accentColor}}>
-                        <FontAwesomeIcon icon={faThumbsDown} size="2x"/>
+                <div className={css({ display: 'flex',alignItems:'center', justifyContent: 'space-around',width:'100%',position:'absolute',top:'-32px' })}>
+                    <div onClick={() => swipe('left')} className={css({ cursor: 'pointer',width:'65px',height:'65px',rounded:'50%',display: 'flex', alignItems:'center', justifyContent: 'space-around',boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2)' })} style={{backgroundColor:white}}>
+                        <FontAwesomeIcon icon={faThumbsDown} size="2x" className={css({color:'#FF31AD'})} />
                     </div>
-                    <div onClick={goBack} className={css({ cursor: 'pointer',width:'60px',height:'60px',rounded:'50%',display: 'flex', alignItems:'center', justifyContent: 'space-around' })} style={{backgroundColor:accentColor}}>
-                        <FontAwesomeIcon icon={faUndo} size="2x"/>
+                    <div onClick={goBack} className={css({ cursor: 'pointer',width:'60px',height:'60px',rounded:'50%',display: 'flex', alignItems:'center', justifyContent: 'space-around',boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2)' })} style={{backgroundColor:white}}>
+                        <FontAwesomeIcon icon={faUndo} size="2x" className={css({color:'#d9d9d9'})}/>
                     </div>
-                    <div onClick={() => swipe('right')} className={css({ cursor: 'pointer',width:'65px',height:'65px',rounded:'50%',display: 'flex', alignItems:'center', justifyContent: 'space-around' })} style={{backgroundColor:accentColor}}>
-                        <FontAwesomeIcon icon={faThumbsUp} size="2x"/>
+                    <div onClick={() => swipe('right')} className={css({ cursor: 'pointer',width:'65px',height:'65px',rounded:'50%',display: 'flex', alignItems:'center', justifyContent: 'space-around',boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2)' })} style={{backgroundColor:white}}>
+                        <FontAwesomeIcon icon={faThumbsUp} size="2x" className={css({color:'#5AFF31'})}/>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { css } from '../../../styled-system/css';
 import Link from 'next/link';
 import { subColor, white } from '@/style/color';
+import Image from 'next/image';
+import LoadingBar from '../../components/LoadingBar';
 
 type Recipe = {
     image: string;
@@ -25,6 +27,7 @@ export default function Recipe() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(false);
     const [noResults, setNoResults] = useState(false);
+    const [percent, setPercent] = useState(0);
 
     useEffect(() => {
         const url = `https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}`;
@@ -55,6 +58,7 @@ export default function Recipe() {
             return;
         }
         setLoading(true);
+        setPercent(0);
         const url = `https://app.rakuten.co.jp/services/api/Recipe/CategoryList/20170426?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}`;
     
         const res = await fetch(url);
@@ -102,6 +106,7 @@ export default function Recipe() {
         const dfKeyword = df.filter((row) => row.categoryName.includes(keyword));
         let dfRecipe: Recipe[] = [];
         let displayedRecipeIds = new Set();
+        const increment = 100 / dfKeyword.length;
     
         for (let row of dfKeyword) {
             await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -124,6 +129,9 @@ export default function Recipe() {
                 displayedRecipeIds.add(recipe.recipeId);
                 }
             });
+
+            setPercent((prev) => Math.min(prev + increment, 100));
+
         }
 
         if (dfRecipe.length === 0) {
@@ -157,7 +165,11 @@ export default function Recipe() {
                     <h2>レシピ一覧</h2>
                 </section>
                 {loading ? (
-                <p>Loading...</p>
+                    <div className={css({width:'100%',height:'55vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'})}>
+                        <LoadingBar percent={percent} />
+                        <p className={css({textAlign:'center',mt:'20px',mb:'15px',fontWeight:'bold',fontSize:'32px'})}>検索中...</p>
+                        <Image src='/sutokkun.svg' alt='ストッくん' width={180} height={240}/>
+                    </div>
                 ) : (
                 <ul id="recipe_list">
                     {recipes.length > 0 ? (

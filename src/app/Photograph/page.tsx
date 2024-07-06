@@ -57,9 +57,16 @@ export default function Photograph() {
     };
 
     const handleSearchRecipes = () => {
-        router.push('/Photograph/SuggestionsRecipe');
+        // detectedObjectsを配列に変換し、クエリパラメータとしてURLに追加
+        const detectedArray = Array.from(detectedObjects);
+        if (detectedArray.length === 0) {
+            alert("食材を撮影するか入力してください");
+            return;
+        }
+        const query = detectedArray.map(obj => `objects=${encodeURIComponent(obj)}`).join('&');
+        router.push(`/Photograph/SuggestionsRecipe?${query}`);
     };
-
+        
     const handleAddNewObject = () => {
         if (newObject.trim() !== "") {
             setDetectedObjects(prevObjects => new Set<string>([...prevObjects, newObject.trim()]));

@@ -20,7 +20,7 @@ export default function Photograph() {
             'carrot': 'にんじん',
             'orange': 'オレンジ',
             'tomato': 'トマト',
-            'person': '人間'
+            // 'person': '人間'
             // 必要に応じて他の翻訳を追加
         };
     

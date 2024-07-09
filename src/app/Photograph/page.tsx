@@ -12,6 +12,7 @@ export default function Photograph() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newObject, setNewObject] = useState("");
     const router = useRouter();
+    const fetchURL = 'http://localhost:5001/results';
 
     useEffect(() => {
         const translations: { [key: string]: string } = {
@@ -20,13 +21,13 @@ export default function Photograph() {
             'carrot': 'にんじん',
             'orange': 'オレンジ',
             'tomato': 'トマト',
-            // 'person': '人間'
+            'person': '肉'
             // 必要に応じて他の翻訳を追加
         };
     
         const fetchDetections = async () => {
             try {
-                const response = await fetch('http://localhost:5001/results');
+                const response = await fetch(fetchURL);
                 const detectedObjects: string[] = await response.json();
                 
                 // 翻訳が存在するオブジェクトのみをセットに追加
@@ -75,12 +76,75 @@ export default function Photograph() {
         }
     };
 
+    const isMobile = () => {
+        return /Mobi|Android/i.test(navigator.userAgent);
+    };
+
+    useEffect(() => {
+        const videoContainer = document.getElementById('videoContainer');
+        if (videoContainer) {
+            if (isMobile() && !document.getElementById('canvas')) { // 既にcanvasが存在するかを確認
+                const canvas = document.createElement('canvas');
+                canvas.id = 'canvas';
+                canvas.width = 240;
+                canvas.style.height = '40vh'; // ビデオの高さスタイルを適用
+                canvas.style.borderRadius = '15px'; // ビデオのボーダーラジアススタイルを適用
+                videoContainer.appendChild(canvas);
+                const context = canvas.getContext('2d');
+
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                        const video = document.createElement('video') as HTMLVideoElement;
+                        video.srcObject = stream;
+                        video.play();
+                        video.style.display = 'none'; // ビデオを非表示にする
+
+                        const captureFrame = () => {
+                            if (context && video.readyState === video.HAVE_ENOUGH_DATA) {
+                                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                            }
+                            requestAnimationFrame(captureFrame);
+                        };
+
+                        captureFrame();
+                    }).catch(error => {
+                        console.error('Error accessing media devices:', error);
+                    });
+                }
+
+                const sendFrameToServer = () => {
+                    const dataURL = canvas.toDataURL('image/png');
+
+                    fetch(fetchURL, {
+                        method: 'POST',
+                        body: JSON.stringify({ image: dataURL }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(response => response.json()).then(data => {
+                        console.log(data);
+                    });
+                };
+
+                setInterval(sendFrameToServer, 1000); // 1秒ごとにフレームをサーバーに送信
+            } else if (!isMobile() && !document.getElementById('videoFeed')) {
+                const img = document.createElement('img');
+                img.id = 'videoFeed';
+                img.width = 640;
+                img.style.height = '40vh';
+                img.style.borderRadius = '15px';
+                img.src = 'http://localhost:5001/detect';
+                videoContainer.appendChild(img);
+            }
+        }
+    }, []);
+
     return (
-        <main>
+        <main className={css({h:'calc(100vh - 52px)'})}> {/* ,overflowY:'hidden' */}
             <h2 className={css({fontSize:'20px',fontWeight:'bold',textAlign:'center',pt:'10px'})}>食材を撮影してください</h2>
-            <img id="videoFeed" src="http://localhost:5001/detect" alt="ビデオフィード" className={css({width:'90%',height:'280px',rounded:'15px',margin:'0 auto',pt:'5px'})} />
+            <div id="videoContainer" className={css({ width: '90%', rounded: '15px', margin: '0 auto', pt: '5px' })}></div>
             <h3 className={css({fontSize:'18px',fontWeight:'bold',textAlign:'center',pt:'10px'})}>余っている食材達</h3>
-            <ul className={css({width:'80%',height:'100px',margin:'0 auto',rounded:'8px',border:'3px solid #FFCE7B',p:'5px',display:'flex',flexWrap:'wrap',gap:'8px',overflowY:'scroll',position:'relative',})}>
+            <ul className={css({width:'80%',height:'15vh',margin:'0 auto',rounded:'8px',border:'3px solid #FFCE7B',p:'5px',display:'flex',flexWrap:'wrap',gap:'8px',overflowY:'scroll',position:'relative',})}>
                 {Array.from(detectedObjects).map((obj, index) => 
                     <li key={index} className={css({border:'1px solid #FFCE7B',display:'inline-block',rounded:'12px',height:'24px'})}>
                         <div className={css({display:'flex',alignItems:'center',gap:'3px',flexWrap:'wrap',margin:'0 4px'})}>

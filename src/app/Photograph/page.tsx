@@ -27,7 +27,7 @@ export default function Photograph() {
     
         const fetchDetections = async () => {
             try {
-                const response = await fetch(fetchURL);
+                const response = await fetch('http://localhost:5001/results');
                 const detectedObjects: string[] = await response.json();
                 
                 // 翻訳が存在するオブジェクトのみをセットに追加
@@ -86,7 +86,9 @@ export default function Photograph() {
             if (isMobile() && !document.getElementById('canvas')) { // 既にcanvasが存在するかを確認
                 const canvas = document.createElement('canvas');
                 canvas.id = 'canvas';
-                canvas.width = 240;
+                canvas.width = 640;
+                canvas.height = 480;
+                canvas.style.width = '100%';
                 canvas.style.height = '40vh'; // ビデオの高さスタイルを適用
                 canvas.style.borderRadius = '15px'; // ビデオのボーダーラジアススタイルを適用
                 videoContainer.appendChild(canvas);
@@ -114,18 +116,20 @@ export default function Photograph() {
 
                 const sendFrameToServer = () => {
                     const dataURL = canvas.toDataURL('image/png');
-
-                    fetch(fetchURL, {
+                
+                    fetch('http://localhost:5001/upload', {  // URLを確認
                         method: 'POST',
                         body: JSON.stringify({ image: dataURL }),
                         headers: {
                             'Content-Type': 'application/json'
                         }
                     }).then(response => response.json()).then(data => {
-                        console.log(data);
+                        // console.log(data);
+                    }).catch(error => {
+                        console.error('Error sending frame to server:', error);
                     });
                 };
-
+                
                 setInterval(sendFrameToServer, 1000); // 1秒ごとにフレームをサーバーに送信
             } else if (!isMobile() && !document.getElementById('videoFeed')) {
                 const img = document.createElement('img');
@@ -138,7 +142,7 @@ export default function Photograph() {
             }
         }
     }, []);
-
+    
     return (
         <main className={css({h:'calc(100vh - 52px)'})}> {/* ,overflowY:'hidden' */}
             <h2 className={css({fontSize:'20px',fontWeight:'bold',textAlign:'center',pt:'10px'})}>食材を撮影してください</h2>

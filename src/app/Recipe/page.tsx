@@ -43,7 +43,7 @@ export default function Recipe() {
                     Indication: recipe.recipeIndication,
                     recipeUrl: recipe.recipeUrl,
                 }));
-                setRecipes(recipes);
+                setRecipes(recipes.slice(0, 10)); // 最初の10件を設定
                 console.log(data.result);
             })
             .catch(error => console.error('Error:', error));
@@ -135,11 +135,13 @@ export default function Recipe() {
 
         }
 
+        // 取得したレシピを10件に制限する
+        setRecipes(dfRecipe.slice(0, 10));
+
         if (dfRecipe.length === 0) {
             setNoResults(true);
         }
     
-        setRecipes(dfRecipe);
         setLoading(false);
     };
     
@@ -157,7 +159,7 @@ export default function Recipe() {
                             className={css({width:'80%',height:'100%',pl:'14px',rounded:'35px 0 0 35px',outline:'none'})}
                             disabled={loading}
                         />
-                        <button type="submit" className={css({width:'20%',height:'98%',rounded:'0 35px 35px 0',transform:'translateX(-1px)',fontSize:loading ? '12px' : '16px'})} style={{backgroundColor:loading ? '#FFD5B0' : subColor,color:white}}>
+                        <button type="submit" className={css({width:'20%',height:'100%',rounded:'0 35px 35px 0',fontSize:loading ? '12px' : '16px'})} style={{backgroundColor:loading ? '#FFD5B0' : subColor,color:white}}>
                             {loading ? "検索中..." : "検索"}
                         </button>
                     </div>

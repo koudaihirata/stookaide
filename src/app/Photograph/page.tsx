@@ -12,7 +12,6 @@ export default function Photograph() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newObject, setNewObject] = useState("");
     const router = useRouter();
-    const fetchURL = 'http://localhost:5001/results';
 
     useEffect(() => {
         const translations: { [key: string]: string } = {

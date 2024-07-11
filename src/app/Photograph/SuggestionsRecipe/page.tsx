@@ -7,6 +7,7 @@ import { faThumbsUp, faThumbsDown, faUndo } from '@fortawesome/free-solid-svg-ic
 import { css } from '../../../../styled-system/css';
 import { accentColor, white } from '@/style/color';
 import { useSearchParams, useRouter } from 'next/navigation';
+import LoadingAnimation from '@/components/LoadingAnimation/LoadingAnimation';
 
 function SuggestionsRecipeComponent() {
     const [lastDirection, setLastDirection] = useState<string>();
@@ -14,11 +15,10 @@ function SuggestionsRecipeComponent() {
     const [percent, setPercent] = useState<number>(0);
     const [data, setData] = useState<any[]>([]);
     const [keywords, setKeywords] = useState<string[]>([]);
-    const [warning, setWarning] = useState<string | null>(null); // 警告メッセージの状態を追加
-
     const currentIndexRef = useRef(currentIndex);
     const searchParams = useSearchParams();
-    const router = useRouter();
+    const [loadingStatus, setLoadingStatus] = useState<string>('');
+    
 
     const childRefs = useMemo<React.RefObject<any>[]>(
         () => Array(data.length).fill(0).map((i) => React.createRef()),
@@ -71,7 +71,7 @@ function SuggestionsRecipeComponent() {
         const fetchKeywords = () => {
             const objects = searchParams.get('objects');
             const detectedObjects = objects ? objects.split(',') : [];
-            setKeywords(detectedObjects.length > 0 ? detectedObjects : ["牛肉", "鶏肉", "豚肉"]);
+            setKeywords(detectedObjects.length > 0 ? detectedObjects : [""]);
         };
 
         fetchKeywords();
@@ -109,8 +109,12 @@ function SuggestionsRecipeComponent() {
 
                 let df_recipe: React.SetStateAction<any[]> = [];
                 let displayedRecipeIds = new Set();
+                let recipeCount = 0;
 
-                for (let row of df_keyword) {
+                setLoadingStatus('レシピを取得しています...');
+
+                for (let i = 0; i < df_keyword.length; i++) {
+                    let row = df_keyword[i];
                     await new Promise(resolve => setTimeout(resolve, 1000));
 
                     let url = `https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&categoryId=${row.categoryId}`;
@@ -133,14 +137,23 @@ function SuggestionsRecipeComponent() {
                                 Indication: recipe.recipeIndication,
                             });
                             displayedRecipeIds.add(recipe.recipeId);
+                            recipeCount++;
                         }
                     });
+
+                    setLoadingStatus(`レシピを取得中: ${i + 1} / 6`);
+
+                    if (recipeCount >= 20) {
+                        break;
+                    }
                 }
 
                 setData(df_recipe);
+                setLoadingStatus('');
                 setCurrentIndex(df_recipe.length - 1);
             } catch (error) {
                 console.error('エラーが発生しました：', error);
+                setLoadingStatus('エラーが発生しました');
             }
         };
 
@@ -148,9 +161,14 @@ function SuggestionsRecipeComponent() {
     }, [keywords]);
 
     return (
-        <main className={css({ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' })}>
+        <main className={css({ w:'100%',h:'calc(100vh - 52px)',display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',overflow:'hidden' })}>
             <Progressbar width={80} percent={percent} />
-            <div className={css({ width: '80%', height: '450px', m: '5px auto 0', position: 'relative' })}>
+            <div className={css({ width: '80%', height: '450px', m: '15px auto 0', position: 'relative' })}>
+                {loadingStatus && 
+                    <div className={css({w:'100%',h:'100%',display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',gap:'40px'})}>
+                        <LoadingAnimation/>
+                        <p className={css({textAlign:'center'})}>{loadingStatus}</p>
+                    </div>}
                 {data.map((item, index) => (
                     <TinderCard
                         ref={childRefs[index]}

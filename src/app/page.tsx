@@ -6,6 +6,7 @@ import RankingBtn from "@/components/RankingBtn";
 import Link from "next/link";
 import { white } from "@/style/color";
 import Help from "@/components/Help";
+import Splash from "@/components/splash/splash";
 
 const RankingProps = [
   {
@@ -37,6 +38,7 @@ const HelpProps = [
 export default function Home() {
   return (
     <main className={css({position:'relative'})}>
+      <Splash/>
       <div className={css({width:'100%',height:'380px',background:'linear-gradient(180deg, #FFCE7B 58.71%, #FFF 100%)'})}>
         {RankingProps.map((RankingProp,index) => {
           return<RankingBtn key={index} {...RankingProp}/>

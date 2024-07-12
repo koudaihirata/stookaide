@@ -19,19 +19,24 @@
     "@fortawesome/react-fontawesome": "latest",
     "@react-spring/web": "^9.7.3",
     "next": "14.2.4",
+    "prisma": "^5.16.2",
     "react": "^18",
     "react-dom": "^18",
     "react-tinder-card": "^1.6.4",
     "sass": "^1.77.6",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@pandacss/dev": "^0.41.0",
-    "@types/node": "^20",
+    "@types/node": "^20.14.10",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
-    "typescript": "^5"
-  }
+    "typescript": "^5.5.3",
+    "@types/bun": "latest"
+  },
+  "module": "index.ts",
+  "type": "module"
 }

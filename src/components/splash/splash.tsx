@@ -1,4 +1,4 @@
-import "@/components/splash/splash.scss";
+import "@/components/Splash/Splash.scss";
 
 export default function Splash() {
     return(

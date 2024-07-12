@@ -6,7 +6,7 @@ import RankingBtn from "@/components/RankingBtn";
 import Link from "next/link";
 import { white } from "@/style/color";
 import Help from "@/components/Help";
-import Splash from "@/components/splash/Splash";
+import Splash from "@/components/Splash/Splash";
 
 const RankingProps = [
   {

@@ -10,7 +10,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isSpecialPage = pathname === "/register" || pathname === "/login"; // 新規登録ページやログインページをチェック
+  const isSpecialPage = pathname === "/register" || pathname === "/logIn"; // 新規登録ページやログインページをチェック
 
   return (
     <>

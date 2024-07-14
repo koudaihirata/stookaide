@@ -10,7 +10,7 @@ export default function ClientLayout({
     children: React.ReactNode;
 }) {
     const pathname = usePathname();
-    const isSpecialPage = pathname.startsWith("/logIn");
+    const isSpecialPage = pathname.startsWith("/LogIn");
     
     return (
         <>

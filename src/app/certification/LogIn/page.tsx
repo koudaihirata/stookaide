@@ -1,10 +1,10 @@
 
 
 import { mainColor, white } from "@/style/color";
-import { css } from "../../../styled-system/css";
 import Image from "next/image";
 import Link from "next/link";
 import Btn from "@/components/Btn";
+import { css } from "../../../../styled-system/css";
 
 
 export default function LogIn() {
@@ -26,11 +26,12 @@ export default function LogIn() {
                     </div>
                 </div>
             </form>
-            <Link href='#'>
+            <Link href='/certification/SignUp'>
                 <div className={css({w:'80%',h:'52px',rounded:'8px',m:'8vh auto 0'})} style={{backgroundColor:white}}>
                     <p className={css({fontSize:'22px',fontWeight:'bold',textAlign:'center',lineHeight:'52px'})}>新規登録</p>
                 </div>
             </Link>
+            <p className={css({fontSize:'12px',textAlign:'center',m:'5vh'})} style={{color:white}}>メールアドレスまたはパスワードを忘れた方は<Link href='#' className={css({color:'#005DB5'})}>こちら</Link></p>
         </main>
     )
 }

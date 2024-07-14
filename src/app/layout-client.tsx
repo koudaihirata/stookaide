@@ -5,18 +5,18 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export default function ClientLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-  const isSpecialPage = pathname === "/register" || pathname === "/logIn"; // 新規登録ページやログインページをチェック
-
-  return (
-    <>
-      {!isSpecialPage && <Header />}
-      {children}
-      {!isSpecialPage && <Footer />}
-    </>
-  );
+    const pathname = usePathname();
+    const isSpecialPage = pathname.startsWith("/logIn");
+    
+    return (
+        <>
+            {!isSpecialPage && <Header />}
+            {children}
+            {!isSpecialPage && <Footer />}
+        </>
+    );
 }

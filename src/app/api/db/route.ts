@@ -1,7 +1,10 @@
-// src/app/api/db/route.ts
+import { NextRequest, NextResponse } from 'next/server';
 
-import { NextApiRequest, NextApiResponse } from 'next';
+export async function GET(req: NextRequest) {
+  return NextResponse.json({ message: "Hello from API route" });
+}
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.status(200).json({ message: "Hello from API route" });
+export async function POST(req: NextRequest) {
+  const data = await req.json();
+  return NextResponse.json({ message: "Data received", data });
 }

@@ -7,24 +7,34 @@ import Btn from "@/components/Btn";
 import { css } from "../../../../styled-system/css";
 import axios from "axios";
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
 
 export default function LogIn() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const router = useRouter();
 
-    const handleLogin = async (e:any) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const response = await axios.post('https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=login', {
                 email: email,
                 password: password,
             });
-            // 成功した場合の処理 (例: トークンを保存し、ダッシュボードにリダイレクト)
+
             console.log(response.data);
+
+            if (response.data.message === "Login failed.") {
+                setError("ログインに失敗しました。メールアドレスまたはパスワードが正しくありません。");
+            } else {
+                // トークンなどのデータをlocalStorageに保存
+                localStorage.setItem('token', JSON.stringify(response.data));
+                // トップページ（'/'）にリダイレクト
+                // router.push('/');
+            }
         } catch (err) {
-            setError("ログインに失敗しました。メールアドレスまたはパスワードが正しくありません。");
+            setError("ログインに失敗しました。サーバーに問題が発生しました。");
         }
     };
 

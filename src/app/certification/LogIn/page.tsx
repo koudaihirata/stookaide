@@ -8,6 +8,7 @@ import { css } from "../../../../styled-system/css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import apiClient from "@/api/apiClient";
+import Splash from "@/components/Splash/Splash";
 
 export default function LogIn() {
     const [email, setEmail] = useState('');
@@ -41,6 +42,7 @@ export default function LogIn() {
 
     return (
         <main className={css({w:'100%',h:'100vh',})} style={{backgroundColor:mainColor}}>
+            <Splash/>
             <h1>
                 <Image src='/nameLogo.png' alt="STOOKAide" width={232} height={55} className={css({m:'0 auto 0'})}/>
             </h1>

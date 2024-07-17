@@ -3,7 +3,9 @@
 export default function Profile() {
     return(
         <>
-            <main>Profile</main>
+            <main>
+                
+            </main>
         </>
     )
 }

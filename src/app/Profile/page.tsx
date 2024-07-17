@@ -1,10 +1,14 @@
 
 
+import ProfileMain from "@/components/ProfileMain/ProfileMain";
+import { css } from "../../../styled-system/css";
+
+
 export default function Profile() {
     return(
         <>
-            <main>
-                
+            <main className={css({h:'100vh'})}>
+                <ProfileMain/>
             </main>
         </>
     )

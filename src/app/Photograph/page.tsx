@@ -143,7 +143,7 @@ export default function Photograph() {
     }, []);
     
     return (
-        <main className={css({h:'calc(100vh - 52px)'})}> {/* ,overflowY:'hidden' */}
+        <main className={css({h:'100vh'})}> {/* ,overflowY:'hidden' */}
             <h2 className={css({fontSize:'20px',fontWeight:'bold',textAlign:'center',pt:'10px'})}>食材を撮影してください</h2>
             <div id="videoContainer" className={css({ width: '90%', rounded: '15px', margin: '0 auto', pt: '5px' })}></div>
             <h3 className={css({fontSize:'18px',fontWeight:'bold',textAlign:'center',pt:'10px'})}>余っている食材達</h3>

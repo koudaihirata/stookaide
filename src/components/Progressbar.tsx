@@ -10,8 +10,8 @@ const Progressbar: React.FC<ProgressbarProps> = ({ width, percent }) => {
   const progressWidth = `${percent * 100}%`;
 
   return (
-    <div style={{ width: `${width}%`, backgroundColor: '#e0e0df', borderRadius: '8px', overflow: 'hidden'}}>
-      <div style={{ width: progressWidth, backgroundColor: accentColor, height: '20px' }} />
+    <div style={{ width: `${width}%`, backgroundColor: '#e0e0df', borderRadius: '8px', overflow: 'hidden',marginTop:'12px'}}>
+      <div style={{ width: progressWidth, backgroundColor: accentColor, height: '16px' }} />
     </div>
   );
 };

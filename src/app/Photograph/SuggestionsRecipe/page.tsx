@@ -161,7 +161,7 @@ function SuggestionsRecipeComponent() {
     }, [keywords]);
 
     return (
-        <main className={css({ w:'100%',h:'calc(100vh - 52px)',display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',overflow:'hidden' })}>
+        <main className={css({ w:'100%',h:'100vh',display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',overflow:'hidden' })}>
             <Progressbar width={80} percent={percent} />
             <div className={css({ width: '80%', height: '450px', m: '15px auto 0', position: 'relative' })}>
                 {loadingStatus && 

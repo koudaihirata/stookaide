@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Btn from "@/components/Btn";
 import { css } from "../../../../styled-system/css";
-import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import apiClient from "@/api/apiClient";
 
 export default function LogIn() {
     const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ export default function LogIn() {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=login', {
+            const response = await apiClient.post('https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=login', {
                 email: email,
                 password: password,
             });
@@ -29,9 +29,10 @@ export default function LogIn() {
                 setError("ログインに失敗しました。メールアドレスまたはパスワードが正しくありません。");
             } else {
                 // トークンなどのデータをlocalStorageに保存
-                localStorage.setItem('token', JSON.stringify(response.data));
+                localStorage.setItem('accessToken', JSON.stringify(response.data));
+                localStorage.setItem('refreshToken', JSON.stringify(response.data));
                 // トップページ（'/'）にリダイレクト
-                // router.push('/');
+                router.push('/');
             }
         } catch (err) {
             setError("ログインに失敗しました。サーバーに問題が発生しました。");

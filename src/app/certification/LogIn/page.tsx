@@ -8,7 +8,7 @@ import { css } from "../../../../styled-system/css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import apiClient from "@/api/apiClient";
-import "@/components/Splash/Splash.scss";
+import "@/components/Anime.scss";
 
 export default function LogIn() {
     const [email, setEmail] = useState('');

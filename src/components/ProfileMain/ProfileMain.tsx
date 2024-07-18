@@ -11,7 +11,7 @@ import "@/components/ProfileMain/ProfileMain.scss";
 export default function ProfileMain() {
     return(
         <>
-            <div className={css({w:'100%',h:'312px',borderBottom:'1px solid rgba(130, 130, 130, 0.25)',position:'relative',display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column'})}>
+            <div className={css({w:'100%',h:'280px',borderBottom:'1px solid rgba(130, 130, 130, 0.25)',position:'relative',display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column'})}>
                 <Link href={'#'} >
                     <FontAwesomeIcon icon={faGears} style={{color:mainColor}} className={css({fontSize:'32px',position:'absolute',top:'14px',right:'20px'})}/>
                 </Link>

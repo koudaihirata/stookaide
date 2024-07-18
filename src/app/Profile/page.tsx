@@ -12,7 +12,7 @@ export default function Profile() {
             <main className={css({h:'100vh'})}>
                 <ProfileMain/>
                 <ProfileFavorite/>
-                <div className={css({w:'100%',display:'flex',justifyContent:'center'})}>
+                <div className={css({w:'100%',display:'flex',justifyContent:'center',mt:'20px'})}>
                     <Btn label="ログアウト"/>
                 </div>
             </main>

@@ -38,7 +38,7 @@ export default function ProfileFavorite() {
             const refreshToken = JSON.parse(localStorage.getItem('refreshToken') || 'null');
 
             // console.log(accessToken);
-            console.log(accessToken.user.favorite_recipe);
+            // console.log(accessToken.user.favorite_recipe);
             
             if (!accessToken && !refreshToken) {
                 // トークンがない場合、ログインページにリダイレクト
@@ -62,11 +62,11 @@ export default function ProfileFavorite() {
                     {recipes.map((recipe, index) => (
                         <Link key={index}  href={recipe.recipeUrl} legacyBehavior passHref>
                             <a target="_blank" rel="noopener noreferrer">
-                                <div className={css({w:'110px',h:'120px',display:'flex',alignItems:'center',justifyContent:'space-around',flexDirection:'column',m:'0 12px'})}>
+                                <div className={css({w:'110px',h:'140px',display:'flex',alignItems:'center',flexDirection:'column',m:'0 12px',gap:'6px'})}>
                                     <div className={css({w:'80px',h:'80px',rounded:'50px',display:'flex',alignItems:'center',justifyContent:'center',boxShadow:'0px 0px 4px 0px rgba(0, 0, 0, 0.25)'})} style={{backgroundColor:mainColor}}>
                                         <Image src={recipe.foodImageUrl} alt="レシピのトップ画" width={70} height={70} className={css({w:'70px',h:'70px',rounded:'50%'})}/>
                                     </div>
-                                    <p className={css({fontWeight:'bold',fontSize:'10px',whiteSpace:'normal',overflow:'hidden',textOverflow:'ellipsis'})}>{recipe.recipeTitle}</p>
+                                    <p className={css({fontWeight:'bold',fontSize:'10px',whiteSpace:'normal',overflow:'ellipsis',textOverflow:'ellipsis'})}>{recipe.recipeTitle}</p>
                                 </div>
                             </a>
                         </Link>

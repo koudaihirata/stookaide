@@ -180,7 +180,7 @@ export default function Recipe() {
                             <Link key={index} href={recipe.recipeUrl} legacyBehavior passHref>
                                 <a target="_blank" rel="noopener noreferrer">
                                     <li className={css({width:'100%',marginTop:'20px',border:'3px solid #FFCE7B',rounded:'10px',display:'flex',alignItems:'center',flexDirection:'column',gap:'10px'})}>
-                                        <img src={recipe.image} alt={recipe.title} width={220} height={200} className={css({width:'220',height:'200',rounded:'10px',marginTop:'10px'})}/>
+                                        <Image src={recipe.image} alt={recipe.title} width={220} height={200} className={css({width:'220',height:'200',rounded:'10px',marginTop:'10px'})}/>
                                         <h3 className={css({width:'100%',textAlign:'center',fontWeight:'bold'})}>{recipe.title}</h3>
                                         <p className={css({width:'90%',margin:'0 auto',textAlign:'center',fontSize:'14px'})}>{recipe.description}</p>
                                         <p className={css({fontSize:'20px',marginBottom:'10px'})}>{recipe.Indication}</p>

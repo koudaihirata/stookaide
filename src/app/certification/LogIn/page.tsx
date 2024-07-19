@@ -75,8 +75,7 @@ export default function LogIn() {
                         />
                     </div>
                     <div className={css({fontSize:'22px',display:'inline-block'})}>
-                        {/* <Btn label='ログイン' /> */}
-                        <button type="button" onClick={handleLogin}>ログイン</button>
+                        <Btn label='ログイン' />
                     </div>
                 </div>
                 {error && <p className={css({color: 'red', textAlign: 'center', marginTop: '16px'})}>{error}</p>}

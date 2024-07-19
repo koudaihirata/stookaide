@@ -7,8 +7,8 @@ import Btn from "@/components/Btn";
 import { css } from "../../../../styled-system/css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import apiClient from "@/api/apiClient";
 import "@/components/Anime.scss";
+import axios from "axios";
 
 export default function LogIn() {
     const [email, setEmail] = useState('');
@@ -17,9 +17,9 @@ export default function LogIn() {
     const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault(); 
         try {
-            const response = await apiClient.post('https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=login', {
+            const response = await axios.post('https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=login', {
                 email: email,
                 password: password,
             });
@@ -36,6 +36,7 @@ export default function LogIn() {
                 router.push('/');
             }
         } catch (err) {
+            console.error(err);
             setError("ログインに失敗しました。サーバーに問題が発生しました。");
         }
     };
@@ -74,7 +75,8 @@ export default function LogIn() {
                         />
                     </div>
                     <div className={css({fontSize:'22px',display:'inline-block'})}>
-                        <Btn label='ログイン' />
+                        {/* <Btn label='ログイン' /> */}
+                        <button type="button" onClick={handleLogin}>ログイン</button>
                     </div>
                 </div>
                 {error && <p className={css({color: 'red', textAlign: 'center', marginTop: '16px'})}>{error}</p>}

@@ -115,7 +115,7 @@ export default function Recipe() {
             let recipeUrl = `https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_API_KEY}&categoryId=${row.categoryId}`;
             let res = await fetch(recipeUrl);
             let jsonData = await res.json();
-            // console.log(jsonData);
+            console.log(jsonData);
             let recipes = jsonData.result;
         
             recipes.forEach((recipe:any) => {

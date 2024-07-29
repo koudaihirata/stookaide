@@ -1,5 +1,6 @@
-import { redColor } from "@/style/color";
+import { mainColor, redColor, white } from "@/style/color";
 import { css } from "../../../../styled-system/css";
+import Link from "next/link";
 
 
 
@@ -62,6 +63,35 @@ export default function SignUp() {
                     <p className={css({fontSize:'12px',color:'#8F8F8F',mt:'8px'})}>性別をご登録いただきますと、あなたにおすすめの商品をご提案いたします。</p>
                 </div>
                 <div className={css({w:'100%',h:'1px',bg:'#D0D0D0',mt:'22px'})}></div>
+                <p className={css({fontSize:'12px',mt:'24px'})}>利用規約</p>
+                <label className={css({fontSize:'12px'})}>
+                    <input type="checkbox" className={css({mr:'10px',mt:'10px'})} />
+                    注意事項・利用規約・プライバシーポリシーにご同意の上、確認画面へお進みください。
+                </label>
+                <p className={css({fontSize:'12px',color:'#8F8F8F',mt:'8px'})}>性別をご登録いただきますと、あなたにおすすめの商品をご提案いたします。</p>
+                <div className={
+                    css({
+                        w:'100%',
+                        h:'1.5rem',
+                        mt:'14px',
+                        display:'flex',
+                        alignItems:'center',
+                        position:'relative',
+                        _before: {
+                            content: '""',
+                            position:'absolute',
+                            w:'2px',
+                            h:'100%',
+                            top:'50%',
+                            left:'50%',
+                            bg:'#D0D0D0',
+                            transform:'translate(-50%,-50%)'
+                        }
+                    })}>
+                    <Link href={'#'} className={css({w:'50%',color:'#005DB5',fontSize:'12px',textAlign:'center'})}>利用規約</Link>
+                    <Link href={'#'} className={css({w:'50%',color:'#005DB5',fontSize:'12px',textAlign:'center'})}>プライバシーポリシー</Link>
+                </div>
+                <button className={css({w:'100%',h:'52px',textAlign:'center',lineHeight:'52px',mt:'18px',fontWeight:'bold'})} style={{backgroundColor:mainColor,color:white}}>確認画面へ</button>
             </form>
         </main>
     )

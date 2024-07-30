@@ -30,12 +30,22 @@ export default function SignUpForm() {
 
     const handleSignup = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!formData.terms) {
-            setErrorMessage("注意事項・利用規約・プライバシーポリシーにご同意いただく必要があります。");
-        } else if(!formData.user || !formData.em || !formData.ps || !formData.reps || !formData.post){
-            setErrorMessage("すべての必須フィールドを入力してください。");
-        }else if(formData.ps !== formData.reps) {
+        const target = e.target as typeof e.target & {
+            ps: { value: string };
+            reps: { value: string };
+        };
+        const password = target.ps.value;
+
+        const isPasswordValid = password.length >= 8 && /[A-Za-z]/.test(password) && /[0-9]/.test(password);
+        
+        if (formData.ps !== formData.reps) {
             setErrorMessage("パスワードが一致しません。再度確認してください。");
+        } else if(!isPasswordValid){
+            setErrorMessage("パスワードの条件を満たしてください");
+        }else if(!formData.user || !formData.em || !formData.ps || !formData.reps || !formData.post) {
+            setErrorMessage("すべての必須フィールドを入力してください。");
+        }else if(!formData.terms) {
+            setErrorMessage("注意事項・利用規約・プライバシーポリシーにご同意いただく必要があります。");
         }else {
             setErrorMessage("");
             setIsConfirming(true);
@@ -55,18 +65,22 @@ export default function SignUpForm() {
     return(
         <>
         {isConfirming ? (
-                <div>
-                <h1 className={css({ fontSize: '22px', fontWeight: 'bold' })}>確認画面</h1>
-                    <div className={css({ mt: '20px' })}>
-                        <p>ユーザー名: {formData.user}</p>
-                        <p>メールアドレス: {formData.em}</p>
-                        <p>郵便番号: {formData.post}</p>
-                        <p>生年月日: {formData.birth}</p>
-                        <p>性別: {formData.gen}</p>
+                <section className={css({w:'80%',h:'62vh',m:'0 auto'})}>
+                    <h1 className={css({fontSize:'18px',fontWeight:'bold',mt:'18px'})}>確認画面</h1>
+                    <div className={css({mt:'16px'})}>
+                        <p className={css({fontSize:'12px',mr:'1rem'})}>ユーザー名: <span className={css({fontSize:'14px',fontWeight:'bold'})}>{formData.user}</span></p>
+                        <p className={css({fontSize:'12px',mr:'1rem',mt:'12px'})}>メールアドレス: <span className={css({fontSize:'14px',fontWeight:'bold'})}>{formData.em}</span></p>
+                        <p className={css({fontSize:'12px',mr:'1rem',mt:'12px'})}>パスワード: <span className={css({fontSize:'14px',fontWeight:'bold'})}>⚫︎⚫︎⚫︎⚫︎⚫︎⚫︎⚫︎⚫︎⚫</span></p>
+                        <p className={css({fontSize:'12px',mr:'1rem',mt:'12px'})}>郵便番号: <span className={css({fontSize:'14px',fontWeight:'bold'})}>{formData.post}</span></p>
+                        <p className={css({fontSize:'12px',mr:'1rem',mt:'12px'})}>生年月日: <span className={css({fontSize:'14px',fontWeight:'bold'})}>{formData.birth}</span></p>
+                        <p className={css({fontSize:'12px',mr:'1rem',mt:'12px'})}>性別: <span className={css({fontSize:'14px',fontWeight:'bold'})}>{formData.gen}</span></p>
                     </div>
-                    <button className={css({ w: '100%', h: '52px', textAlign: 'center', lineHeight: '52px', mt: '18px', fontWeight: 'bold' })} style={{ backgroundColor: mainColor, color: white }} onClick={handleConfirm}>保存</button>
-                    <button className={css({ w: '100%', h: '52px', textAlign: 'center', lineHeight: '52px', mt: '10px', fontWeight: 'bold' })} style={{ backgroundColor: 'gray', color: white }} onClick={handleEdit}>戻る</button>
-                </div>
+                    <p className={css({fontSize:'12px',color:'#8F8F8F',mt:'28px'})}>入力内容に誤りがないか確認してください。上記の内容が宜しければ登録ボタンを押してください</p>
+                    <div>
+                        <button className={css({ w: '100%', h: '52px', textAlign: 'center', lineHeight: '52px', mt: '18px', fontWeight: 'bold' })} style={{ backgroundColor: mainColor, color: white }} onClick={handleConfirm}>登録</button>
+                        <button className={css({ w: '100%', h: '52px', textAlign: 'center', lineHeight: '52px', mt: '10px', fontWeight: 'bold' })} style={{ backgroundColor: 'gray', color: white }} onClick={handleEdit}>入力画面へ戻る</button>
+                    </div>
+                </section>
             ) : (
             <form onSubmit={handleSignup} className={css({w:'80%',m:'0 auto'})}>
                 <div className={css({w:'100%',mt:'22px'})}>
@@ -82,7 +96,7 @@ export default function SignUpForm() {
                     <input type="password" name="ps" id="ps" className={css({w:'100%',h:'44px',border:'1px solid #3e3e3e',rounded:'8px',pl:'12px',fontSize:'12px'})} placeholder="パスワードを入力してください" onChange={handleChange} value={formData.ps}/>
                     <ul className={css({listStyle:'circle',ml:'1.2rem'})}>
                         <li>
-                            <p className={css({fontSize:'12px'})}>8文字以上20文字以内で入力してください</p>
+                            <p className={css({fontSize:'12px'})}>8文字以上で入力してください</p>
                         </li>
                         <li>
                             <p className={css({fontSize:'12px'})}>半角英字と半角数字を含めてください</p>
@@ -95,7 +109,7 @@ export default function SignUpForm() {
                 </div>
                 <div className={css({w:'100%',mt:'22px'})}>
                     <label htmlFor="post" className={css({fontSize:'12px'})}>郵便番号<span className={css({fontSize:'10px',ml:'10px'})} style={{color:redColor}}>必須</span></label>
-                    <input type="text" name="post" id="post" className={css({w:'100%',h:'44px',border:'1px solid #3e3e3e',rounded:'8px',pl:'12px',fontSize:'12px'})} placeholder="例）5550001" onChange={handleChange} value={formData.post}/>
+                    <input type="number" name="post" id="post" className={css({w:'100%',h:'44px',border:'1px solid #3e3e3e',rounded:'8px',pl:'12px',fontSize:'12px'})} placeholder="例）5550001" onChange={handleChange} value={formData.post}/>
                 </div>
                 <div className={css({w:'100%',mt:'22px'})}>
                     <label htmlFor="birth" className={css({fontSize:'12px'})}>生年月日</label>
@@ -149,7 +163,15 @@ export default function SignUpForm() {
                     <Link href={'#'} className={css({w:'50%',color:'#005DB5',fontSize:'12px',textAlign:'center'})}>利用規約</Link>
                     <Link href={'#'} className={css({w:'50%',color:'#005DB5',fontSize:'12px',textAlign:'center'})}>プライバシーポリシー</Link>
                 </div>
-                <button className={css({w:'100%',h:'52px',textAlign:'center',lineHeight:'52px',mt:'18px',fontWeight:'bold'})} style={{backgroundColor:mainColor,color:white}}>確認画面へ</button>
+                <button className={
+                    css({
+                        w:'100%',
+                        h:'52px',
+                        textAlign:'center',
+                        lineHeight:'52px',
+                        mt:'18px',
+                        fontWeight:'bold'
+                    })} style={{backgroundColor:mainColor,color:white}}>確認画面へ</button>
             </form>
             )}
         </>

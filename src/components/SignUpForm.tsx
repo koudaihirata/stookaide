@@ -59,8 +59,6 @@ export default function SignUpForm() {
     };
 
     const handleConfirm = async () => {
-        console.log("送信するデータ:", formData);
-
         try {
             const response = await fetch('https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=register',{
                 method: 'POST',
@@ -72,9 +70,6 @@ export default function SignUpForm() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log("データを保存しました:", data);
-                console.log("受け取ったデータ:", data.receivedData);
-
                 if (data.message === "ユーザーが正常に登録されました。") {
                     // 成功メッセージの表示やリダイレクト処理
                     router.push('/certification/LogIn')

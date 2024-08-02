@@ -18,7 +18,7 @@ export default function Photograph() {
             'apple': 'りんご',
             'banana': 'バナナ',
             'carrot': 'にんじん',
-            'orange': 'オレンジ',
+            // 'orange': 'オレンジ',
             'tomato': 'トマト',
             // 'person': '肉'
             // 必要に応じて他の翻訳を追加

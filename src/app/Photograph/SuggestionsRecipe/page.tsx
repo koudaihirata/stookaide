@@ -3,7 +3,7 @@ import React, { useState, useRef, useMemo, useEffect, Suspense } from 'react';
 import TinderCard from 'react-tinder-card';
 import Progressbar from '../../../components/Progressbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faThumbsDown, faUndo } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faThumbsDown, faUndo, faStar } from '@fortawesome/free-solid-svg-icons';
 import { css } from '../../../../styled-system/css';
 import { accentColor, white } from '@/style/color';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -190,8 +190,11 @@ function SuggestionsRecipeComponent() {
                                 justifyContent: 'flex-end',
                                 flexDirection:'column',
                                 width: '100%',
-                                height: '100%'
+                                height: '100%',
                             })}>
+                                <div className={css({content:'""',position:'absolute',top:'4%',right:'4%',w:'50px',h:'50px',rounded:'50%',display:'flex',alignItems:'center',justifyContent:'center',boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2)'})} style={{background:white}}>
+                                    <FontAwesomeIcon icon={faStar} className={css({color:'#d9d9d9',fontSize:'32px'})}/>
+                                </div>
                                 <div className={css({bg:'rgba(0,0,0,0.5)',rounded:'0 0 10px 10px'})}>
                                     <h2 className={css({fontSize:'24px',fontWeight:'bold',textAlign:'center'})}>{item.name}</h2>
                                     <p className={css({textAlign:'center',pb:'24px'})}>{item.Indication}</p>

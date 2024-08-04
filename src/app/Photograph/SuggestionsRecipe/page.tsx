@@ -161,11 +161,14 @@ function SuggestionsRecipeComponent() {
         fetchData();
     }, [keywords]);
 
-    const toggleFavorite = (id: string) => {
+    const toggleFavorite = (item:any) => {
         setFavorites(prev => ({
             ...prev,
-            [id]: !prev[id]
+            [item.name]: !prev[item.name]
         }));
+        console.log("ImageUrl:", item.ImageUrl);
+        console.log("Name:", item.name);
+        console.log("Indication:", item.Indication);
     };
     return (
         <main className={css({ w:'100%',h:'100vh',display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',overflow:'hidden' })}>
@@ -199,7 +202,7 @@ function SuggestionsRecipeComponent() {
                                 width: '100%',
                                 height: '100%',
                             })}>
-                                <div onClick={() => toggleFavorite(item.name)} className={css({content:'""',position:'absolute',top:'4%',right:'4%',w:'50px',h:'50px',rounded:'50%',display:'flex',alignItems:'center',justifyContent:'center',boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2)'})} style={{background: 'white'}}>
+                                <div onClick={() => toggleFavorite(item)} className={css({content:'""',position:'absolute',top:'4%',right:'4%',w:'50px',h:'50px',rounded:'50%',display:'flex',alignItems:'center',justifyContent:'center',boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2)'})} style={{background: 'white'}}>
                                     <FontAwesomeIcon icon={faStar} style={{ color: favorites[item.name] ? '#FFCE7B' : '#d9d9d9', fontSize: '32px' }}/>
                                 </div>
                                 <div className={css({bg:'rgba(0,0,0,0.5)',rounded:'0 0 10px 10px'})}>

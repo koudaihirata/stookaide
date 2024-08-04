@@ -5,7 +5,7 @@ import Progressbar from '../../../components/Progressbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faThumbsDown, faUndo, faStar } from '@fortawesome/free-solid-svg-icons';
 import { css } from '../../../../styled-system/css';
-import { accentColor, white } from '@/style/color';
+import { accentColor, mainColor, white } from '@/style/color';
 import { useSearchParams, useRouter } from 'next/navigation';
 import LoadingAnimation from '@/components/LoadingAnimation/LoadingAnimation';
 
@@ -18,6 +18,7 @@ function SuggestionsRecipeComponent() {
     const currentIndexRef = useRef(currentIndex);
     const searchParams = useSearchParams();
     const [loadingStatus, setLoadingStatus] = useState<string>('');
+    const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
     
 
     const childRefs = useMemo<React.RefObject<any>[]>(
@@ -160,6 +161,12 @@ function SuggestionsRecipeComponent() {
         fetchData();
     }, [keywords]);
 
+    const toggleFavorite = (id: string) => {
+        setFavorites(prev => ({
+            ...prev,
+            [id]: !prev[id]
+        }));
+    };
     return (
         <main className={css({ w:'100%',h:'100vh',display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',overflow:'hidden' })}>
             <Progressbar width={80} percent={percent} />
@@ -192,8 +199,8 @@ function SuggestionsRecipeComponent() {
                                 width: '100%',
                                 height: '100%',
                             })}>
-                                <div className={css({content:'""',position:'absolute',top:'4%',right:'4%',w:'50px',h:'50px',rounded:'50%',display:'flex',alignItems:'center',justifyContent:'center',boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2)'})} style={{background:white}}>
-                                    <FontAwesomeIcon icon={faStar} className={css({color:'#d9d9d9',fontSize:'32px'})}/>
+                                <div onClick={() => toggleFavorite(item.name)} className={css({content:'""',position:'absolute',top:'4%',right:'4%',w:'50px',h:'50px',rounded:'50%',display:'flex',alignItems:'center',justifyContent:'center',boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2)'})} style={{background: 'white'}}>
+                                    <FontAwesomeIcon icon={faStar} style={{ color: favorites[item.name] ? '#FFCE7B' : '#d9d9d9', fontSize: '32px' }}/>
                                 </div>
                                 <div className={css({bg:'rgba(0,0,0,0.5)',rounded:'0 0 10px 10px'})}>
                                     <h2 className={css({fontSize:'24px',fontWeight:'bold',textAlign:'center'})}>{item.name}</h2>

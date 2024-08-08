@@ -22,7 +22,7 @@ export default function LeftoversR() {
 
     const fetchIngredients = async (email: User) => {
         try {
-            const response = await axios.get(`https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=　&email=${email}`)
+            const response = await axios.get(`https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=get_ingredients&email=${email}`)
             if (response.status === 200) {
                 setIngredients(response.data.ingredient);
             } else {

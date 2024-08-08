@@ -61,7 +61,7 @@ export default function RankingBtn() {
                     console.error(response.data.message);
                 }
             } catch (error) {
-                console.error('Failed to fetch ingredient:', error);
+                console.error('データの取得が失敗しました:', error);
             }            
         };
 

@@ -94,7 +94,7 @@ UNIQUEキーではないusernameを参照したらおかしくなると気づい
 | カラム名          | データ型      | NULL許可 | キー        | デフォルト値   | 説明               |
 |-------------------|---------------|----------|-------------|----------------|--------------------|
 | id                | INT           | NO       | PRIMARY KEY | AUTO_INCREMENT | 食材ID             |
-| username          | VARCHAR(50)   | NO       | FOREIGN KEY |                | ユーザー名         |
+| email             | VARCHAR(50)   | NO       | FOREIGN KEY |                | メールアドレス       |
 | ingredient_name   | VARCHAR(100)  | YES      |             |                | 食材名             |
 | quantity          | INT           | YES      |             |                | 食材の数量         |
 
@@ -102,7 +102,7 @@ UNIQUEキーではないusernameを参照したらおかしくなると気づい
 
 | 外部キー         | 参照先テーブル       | 参照先カラム |
 |------------------|----------------------|--------------|
-| username         | stook_users          | username     |
+| email            | stook_users          | email     |
 
 ### 3. stook テーブル
 地域ごとの食材情報を格納するテーブルです。

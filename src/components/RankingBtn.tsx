@@ -71,7 +71,7 @@ export default function RankingBtn() {
     }, [useToken]);
 
     const username = useToken ? useToken.user.username : "ストッくん";
-    const displayIngredient = ingredient || "No found";
+    const displayIngredient = ingredient || "データなし";
     
     return (
         <>

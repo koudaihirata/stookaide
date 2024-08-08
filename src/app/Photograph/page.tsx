@@ -28,7 +28,7 @@ export default function Photograph() {
             try {
                 const response = await fetch('http://localhost:5001/results');
                 const detectedObjects: string[] = await response.json();
-                
+                    
                 // 翻訳が存在するオブジェクトのみをセットに追加
                 const newDetectedObjects = new Set<string>(
                     detectedObjects

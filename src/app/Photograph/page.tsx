@@ -56,15 +56,34 @@ export default function Photograph() {
         });
     };
 
-    const handleSearchRecipes = () => {
+    const handleSearchRecipes = async () => {
         // detectedObjectsを配列に変換し、クエリパラメータとしてURLに追加
         const detectedArray = Array.from(detectedObjects);
         if (detectedArray.length === 0) {
             alert("食材を撮影するか入力してください");
             return;
         }
-        const query = detectedArray.map(obj => `objects=${encodeURIComponent(obj)}`).join('&');
-        router.push(`/Photograph/SuggestionsRecipe?${query}`);
+        try {
+            // データベースに保存するためにバックエンドにリクエストを送信
+            const response = await fetch('https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=save_ingredients', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: 'user@example.com', ingredients: detectedArray })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to save ingredients');
+            }
+
+            // 保存が成功したらページ遷移を行う
+            const query = detectedArray.map(obj => `objects=${encodeURIComponent(obj)}`).join('&');
+            router.push(`/Photograph/SuggestionsRecipe?${query}`);
+        } catch (error) {
+            console.error('Error saving ingredients:', error);
+            alert('食材の保存に失敗しました');
+        }
     };
         
     const handleAddNewObject = () => {
@@ -143,7 +162,7 @@ export default function Photograph() {
     }, []);
     
     return (
-        <main className={css({h:'100vh'})}> {/* ,overflowY:'hidden' */}
+        <main className={css({h:'100vh'})}>
             <h2 className={css({fontSize:'20px',fontWeight:'bold',textAlign:'center',pt:'10px'})}>食材を撮影してください</h2>
             <div id="videoContainer" className={css({ width: '90%', rounded: '15px', margin: '0 auto', pt: '5px' })}></div>
             <h3 className={css({fontSize:'18px',fontWeight:'bold',textAlign:'center',pt:'10px'})}>余っている食材達</h3>

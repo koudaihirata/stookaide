@@ -7,7 +7,7 @@ STOOK Aide
 Google Chrome
 
 ## 開発環境/言語
-{
+{<br/>
   "name": "stookaide",
   "version": "0.1.0",
   "private": true,

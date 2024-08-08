@@ -52,9 +52,9 @@ export default function RankingBtn() {
     }, [router]);
 
     useEffect(() => {
-        const fetchIngredient = async (username: string) => {
+        const fetchIngredient = async (email: string) => {
             try {
-                const response = await axios.get(`https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=get_ingredient&username=${username}`);
+                const response = await axios.get(`https://click.ecc.ac.jp/ecc/khirata/STOOKAide/?action=get_ingredient&email=${email}`);
                 if (response.status === 200) {
                     setIngredient(response.data.ingredient);
                 } else {
@@ -66,7 +66,7 @@ export default function RankingBtn() {
         };
 
         if (useToken) {
-            fetchIngredient(useToken.user.username);
+            fetchIngredient(useToken.user.email);
         }
     }, [useToken]);
 

@@ -7,6 +7,7 @@ STOOK Aide
 Google Chrome
 
 ## 開発環境/言語
+```json
 {
   "name": "stookaide",
   "version": "0.1.0",
@@ -53,6 +54,7 @@ Google Chrome
   "module": "index.ts",
   "type": "module"
 }
+```
 
 ## 機能概要(機能一覧)
 - **食材を撮影、検出機能**  

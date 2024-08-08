@@ -7,54 +7,12 @@ STOOK Aide
 Google Chrome
 
 ## 開発環境/言語
-```json
-{
-  "name": "stookaide",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "prepare": "panda codegen",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@fortawesome/fontawesome-svg-core": "^6.5.2",
-    "@fortawesome/free-brands-svg-icons": "^6.5.2",
-    "@fortawesome/free-regular-svg-icons": "^6.5.2",
-    "@fortawesome.free-solid-svg-icons": "^6.5.2",
-    "@fortawesome.react-fontawesome": "latest",
-    "@react-spring/web": "^9.7.3",
-    "@types/react-router-dom": "^5.3.3",
-    "axios": "^1.7.2",
-    "dotenv": "^16.4.5",
-    "next": "14.2.4",
-    "promise-mysql": "^5.2.0",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-router-dom": "latest",
-    "react-tinder-card": "^1.6.4",
-    "sass": "^1.77.6",
-    "styled-system": "^5.1.5",
-    "ts-node": "^10.9.2"
-  },
-  "devDependencies": {
-    "@pandacss/dev": "^0.41.0",
-    "@types/node": "^20.14.10",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.4",
-    "typescript": "^5.5.3",
-    "@types/bun": "latest"
-  },
-  "module": "index.ts",
-  "type": "module"
-}
-```
+- **フロントエンド**
+    Next.js TypeScript パンダCSS 
+- **バックエンド**
+    Flask Python YOLOv8 php
+- **JSランタイム**
+    Bun
 
 ## 機能概要(機能一覧)
 - **食材を撮影、検出機能**  
@@ -94,7 +52,7 @@ UNIQUEキーではないusernameを参照したらおかしくなると気づい
 | カラム名          | データ型      | NULL許可 | キー        | デフォルト値   | 説明               |
 |-------------------|---------------|----------|-------------|----------------|--------------------|
 | id                | INT           | NO       | PRIMARY KEY | AUTO_INCREMENT | 食材ID             |
-| email             | VARCHAR(50)   | NO       | FOREIGN KEY |                | メールアドレス       |
+| email             | VARCHAR(100)   | NO       | FOREIGN KEY |                | メールアドレス       |
 | ingredient_name   | VARCHAR(100)  | YES      |             |                | 食材名             |
 | quantity          | INT           | YES      |             |                | 食材の数量         |
 
@@ -114,3 +72,17 @@ UNIQUEキーではないusernameを参照したらおかしくなると気づい
 | city              | VARCHAR(100)  | NO       |             |                | 市区町村           |
 | ingredient_name   | VARCHAR(100)  | NO       |             |                | 食材名             |
 | quantity          | INT           | NO       |             |                | 食材の数量         |
+
+## コンセプト
+余り物で悩ませない
+
+## こだわったポイント
+一番こだわったポイントは、検出した食材を情報をどのように表示したら良いのかだったりを考え、それを実行するコードを書くのをこだわりました
+
+## デザイン面でこだわったポイント
+デザイン面のポイントは、ホームページを爽やかでわかりやすいUIにしようと考えデザインしました
+
+## 自己評価
+今回の制作では、初めて個人でのフルスタック開発をしてみました<br>
+初めて挑戦することが多く、わからないところを調べてできた時の快感は、今まで以上に気持ちよかったです<br>
+特に、バックエンドとフロントエンドが繋がった時が一番気持ちよかったです

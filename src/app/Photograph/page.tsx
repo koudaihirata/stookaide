@@ -7,11 +7,46 @@ import Btn from '@/components/Btn';
 import { useRouter } from 'next/navigation';
 import { accentColor, white } from '@/style/color';
 
+interface User {
+    created_at: string;
+    date_of_birth: string;
+    email: string;
+    favorite_recipe: string | null;
+    gender: string;
+    id: number;
+    postal_code: string;
+    profile_image: string | null;
+    username: string;
+}
+
+interface AccessToken {
+    message: string;
+    user: User;
+}
+
+
 export default function Photograph() {
     const [detectedObjects, setDetectedObjects] = useState<Set<string>>(new Set<string>());
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newObject, setNewObject] = useState("");
     const router = useRouter();
+    const [useToken, setTokens] = useState<AccessToken | null>(null);
+
+    useEffect(() => {
+        const checkTokens = async () => {
+            const accessToken = JSON.parse(localStorage.getItem('accessToken') || 'null');
+            const refreshToken = JSON.parse(localStorage.getItem('refreshToken') || 'null');
+            
+            if (!accessToken && !refreshToken) {
+                // トークンがない場合、ログインページにリダイレクト
+                router.push('/certification/LogIn');
+            } else {
+                setTokens(accessToken);
+            }
+        };
+
+        checkTokens();
+    }, [router]);
 
     useEffect(() => {
         const translations: { [key: string]: string } = {
@@ -70,7 +105,7 @@ export default function Photograph() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: 'user@example.com', ingredients: detectedArray })
+                body: JSON.stringify({ email: useToken?.user.email, ingredients: detectedArray })
             });
 
             if (!response.ok) {

@@ -19,6 +19,10 @@ function SuggestionsRecipeComponent() {
     const searchParams = useSearchParams();
     const [loadingStatus, setLoadingStatus] = useState<string>('');
     const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
+    const [alpha, setAlpha] = useState<number | null>(null);
+    const [beta, setBeta] = useState<number | null>(null);
+    const [gamma, setGamma] = useState<number | null>(null);
+    const [gyroPermissionGranted, setGyroPermissionGranted] = useState<boolean>(false);
     
 
     const childRefs = useMemo<React.RefObject<any>[]>(
@@ -71,40 +75,46 @@ function SuggestionsRecipeComponent() {
     // ジャイロセンサーのデータ取得を開始する関数
     const startGyro = () => {
         window.addEventListener('deviceorientation', (event) => {
-            const alpha = event.alpha || 0; // alphaの値を取得（デフォルト0）
+            setAlpha(event.alpha || 0); // alphaの値をセット
+            setBeta(event.beta || 0);   // betaの値をセット
+            setGamma(event.gamma || 0); // gammaの値をセット
 
             // Alpha の値が 300 から 320 になったら右にスワイプ
-            if (alpha < 320 && alpha > 300) {
+            if (event.alpha && event.alpha < 320 && event.alpha > 300) {
                 swipe('right');
             }
             // Alpha の値が 40 から 60 になったら左にスワイプ
-            if (alpha > 40 && alpha < 60) {
+            if (event.alpha && event.alpha > 40 && event.alpha < 60) {
                 swipe('left');
             }
         });
     };
 
     // ジャイロセンサーの権限リクエストと開始
-    useEffect(() => {
-        const requestGyroPermission = async () => {
-            if ((DeviceOrientationEvent as any).requestPermission) {
-                try {
-                    const response = await (DeviceOrientationEvent as any).requestPermission();
-                    if (response === 'granted') {
-                        startGyro();
-                    } else {
-                        console.warn('ジャイロデータへのアクセスが拒否されました');
-                    }
-                } catch (error) {
-                    console.error('ジャイロセンサーの権限リクエスト中にエラーが発生しました:', error);
+    const requestGyroPermission = async () => {
+        if ((DeviceOrientationEvent as any).requestPermission) {
+            try {
+                const response = await (DeviceOrientationEvent as any).requestPermission();
+                if (response === 'granted') {
+                    setGyroPermissionGranted(true);
+                    startGyro();
+                } else {
+                    console.warn('ジャイロデータへのアクセスが拒否されました');
                 }
-            } else {
-                // 権限リクエストが不要な場合は直接開始
-                startGyro();
+            } catch (error) {
+                console.error('ジャイロセンサーの権限リクエスト中にエラーが発生しました:', error);
             }
-        };
-        requestGyroPermission();
-    }, [currentIndex, data.length]);
+        } else {
+            setGyroPermissionGranted(true);
+            startGyro();
+        }
+    };
+
+    useEffect(() => {
+        if (!gyroPermissionGranted) {
+            requestGyroPermission();
+        }
+    }, [gyroPermissionGranted]);
 
     useEffect(() => {
         const fetchKeywords = () => {
@@ -210,6 +220,12 @@ function SuggestionsRecipeComponent() {
     };
     return (
         <main className={css({ w:'100%',h:'100vh',display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',overflow:'hidden' })}>
+            <button onClick={requestGyroPermission} className={css({ mb: '10px', padding: '10px', background: mainColor, color: white, borderRadius: '5px' })}>ジャイロセンサーの許可</button>
+            <div className={css({ textAlign: 'center', mb: '10px', color: mainColor })}>
+                    <p>Alpha: {alpha?.toFixed(2)}</p>
+                    <p>Beta: {beta?.toFixed(2)}</p>
+                    <p>Gamma: {gamma?.toFixed(2)}</p>
+            </div>
             <Progressbar width={80} percent={percent} />
             <div className={css({ width: '80%', height: '450px', m: '15px auto 0', position: 'relative' })}>
                 {loadingStatus && 

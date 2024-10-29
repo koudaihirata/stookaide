@@ -54,29 +54,20 @@ function SuggestionsRecipeComponent() {
         await (childRefs[newIndex].current as any).restoreCard();
     };
 
-    const swipe = (direction: string) => {
-        if (canSwipe && currentIndex >= 0 && currentIndex < data.length) {
+    const swipe = async (direction: string) => {
+        if (canSwipe && currentIndex < data.length) {
             if (direction === 'right' && data[currentIndex]) {
-                // 右スワイプ時にURLを開く
                 window.open(data[currentIndex].recipeUrl, '_blank');
-                (childRefs[currentIndex].current as any)?.swipe(direction); // 右スワイプを実行
-            } else if (direction === 'left') {
-                // 左スワイプ時に次のカードに進む
-                (childRefs[currentIndex].current as any)?.swipe(direction);
-                updateCurrentIndex(currentIndex - 1);
             }
+            await (childRefs[currentIndex].current as any).swipe(direction);
         }
     };
-        
+
     const swiped = (direction: string, index: number) => {
         setLastDirection(direction);
-    
+        updateCurrentIndex(index - 1);
         if (direction === 'right' && data[index]) {
-            // 右にスワイプされた場合はレシピのURLを開く
             window.open(data[index].recipeUrl, '_blank');
-        } else if (direction === 'left') {
-            // 左にスワイプされた場合は次のカードに進む
-            updateCurrentIndex(index - 1);
         }
     };
     

@@ -9,6 +9,7 @@ import { accentColor, mainColor, white } from '@/style/color';
 import { useSearchParams, useRouter } from 'next/navigation';
 import LoadingAnimation from '@/components/LoadingAnimation/LoadingAnimation';
 
+
 function SuggestionsRecipeComponent() {
     const [lastDirection, setLastDirection] = useState<string>();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -23,6 +24,8 @@ function SuggestionsRecipeComponent() {
     const [beta, setBeta] = useState<number | null>(null);
     const [gamma, setGamma] = useState<number | null>(null);
     const [gyroPermissionGranted, setGyroPermissionGranted] = useState<boolean>(false);
+    const swipeLeft = () => swiped('left', currentIndex);
+    const swipeRight = () => swiped('right', currentIndex);
     
 
     const childRefs = useMemo<React.RefObject<any>[]>(
@@ -67,12 +70,16 @@ function SuggestionsRecipeComponent() {
         
     const swiped = (direction: string, index: number) => {
         setLastDirection(direction);
-        updateCurrentIndex(index - 1);
+    
         if (direction === 'right' && data[index]) {
+            // 右にスワイプされた場合はレシピのURLを開く
             window.open(data[index].recipeUrl, '_blank');
+        } else if (direction === 'left') {
+            // 左にスワイプされた場合は次のカードに進む
+            updateCurrentIndex(index - 1);
         }
     };
-
+    
     const outOfFrame = (index: number) => {
         currentIndexRef.current >= index && (childRefs[index].current as any).restoreCard();
     };
@@ -85,10 +92,10 @@ function SuggestionsRecipeComponent() {
             setGamma(event.gamma || 0);
         
             if (event.alpha && event.alpha < 320 && event.alpha > 300) {
-                swipe('right');
+                swipeRight();
             }
             if (event.alpha && event.alpha > 40 && event.alpha < 60) {
-                swipe('left');
+                swipeLeft();
             }
         });
     };

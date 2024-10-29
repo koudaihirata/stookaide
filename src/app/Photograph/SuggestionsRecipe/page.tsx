@@ -52,11 +52,15 @@ function SuggestionsRecipeComponent() {
     };
 
     const swipe = async (direction: string) => {
-        if (canSwipe && currentIndex < data.length) {
+        if (canSwipe && currentIndex >= 0 && currentIndex < data.length) {
             if (direction === 'right' && data[currentIndex]) {
+                // 右スワイプ時にURLを開く
                 window.open(data[currentIndex].recipeUrl, '_blank');
+            } else if (direction === 'left') {
+                // 左スワイプ時に次のカードに進む
+                await (childRefs[currentIndex].current as any).swipe(direction);
+                updateCurrentIndex(currentIndex - 1);
             }
-            await (childRefs[currentIndex].current as any).swipe(direction);
         }
     };
 
@@ -78,14 +82,16 @@ function SuggestionsRecipeComponent() {
             setAlpha(event.alpha || 0); // alphaの値をセット
             setBeta(event.beta || 0);   // betaの値をセット
             setGamma(event.gamma || 0); // gammaの値をセット
-
+    
             // Alpha の値が 300 から 320 になったら右にスワイプ
             if (event.alpha && event.alpha < 320 && event.alpha > 300) {
                 swipe('right');
+                
             }
             // Alpha の値が 40 から 60 になったら左にスワイプ
             if (event.alpha && event.alpha > 40 && event.alpha < 60) {
                 swipe('left');
+                updateCurrentIndex(currentIndex - 1); // 次のカードに進む
             }
         });
     };

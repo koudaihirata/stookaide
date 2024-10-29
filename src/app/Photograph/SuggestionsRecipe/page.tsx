@@ -56,6 +56,8 @@ function SuggestionsRecipeComponent() {
             if (direction === 'right' && data[currentIndex]) {
                 // 右スワイプ時にURLを開く
                 window.open(data[currentIndex].recipeUrl, '_blank');
+                // カードを右スワイプして、次に進まない
+                await (childRefs[currentIndex].current as any).swipe(direction);
             } else if (direction === 'left') {
                 // 左スワイプ時に次のカードに進む
                 await (childRefs[currentIndex].current as any).swipe(direction);
@@ -63,7 +65,7 @@ function SuggestionsRecipeComponent() {
             }
         }
     };
-
+    
     const swiped = (direction: string, index: number) => {
         setLastDirection(direction);
         updateCurrentIndex(index - 1);

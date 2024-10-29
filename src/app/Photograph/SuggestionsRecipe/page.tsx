@@ -83,10 +83,10 @@ function SuggestionsRecipeComponent() {
             setGamma(event.gamma || 0);
         
             if (event.alpha && event.alpha < 320 && event.alpha > 300) {
-                swipeRight();
+                swipe('right');
             }
             if (event.alpha && event.alpha > 40 && event.alpha < 60) {
-                swipeLeft();
+                swipe('left');
             }
         });
     };

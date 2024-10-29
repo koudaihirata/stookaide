@@ -51,21 +51,20 @@ function SuggestionsRecipeComponent() {
         await (childRefs[newIndex].current as any).restoreCard();
     };
 
-    const swipe = async (direction: string) => {
+    const swipe = (direction: string) => {
         if (canSwipe && currentIndex >= 0 && currentIndex < data.length) {
             if (direction === 'right' && data[currentIndex]) {
                 // 右スワイプ時にURLを開く
                 window.open(data[currentIndex].recipeUrl, '_blank');
-                // カードを右スワイプして、次に進まない
-                await (childRefs[currentIndex].current as any).swipe(direction);
+                (childRefs[currentIndex].current as any)?.swipe(direction); // 右スワイプを実行
             } else if (direction === 'left') {
                 // 左スワイプ時に次のカードに進む
-                await (childRefs[currentIndex].current as any).swipe(direction);
+                (childRefs[currentIndex].current as any)?.swipe(direction);
                 updateCurrentIndex(currentIndex - 1);
             }
         }
     };
-    
+        
     const swiped = (direction: string, index: number) => {
         setLastDirection(direction);
         updateCurrentIndex(index - 1);
@@ -81,23 +80,19 @@ function SuggestionsRecipeComponent() {
     // ジャイロセンサーのデータ取得を開始する関数
     const startGyro = () => {
         window.addEventListener('deviceorientation', (event) => {
-            setAlpha(event.alpha || 0); // alphaの値をセット
-            setBeta(event.beta || 0);   // betaの値をセット
-            setGamma(event.gamma || 0); // gammaの値をセット
-    
-            // Alpha の値が 300 から 320 になったら右にスワイプ
+            setAlpha(event.alpha || 0);
+            setBeta(event.beta || 0);
+            setGamma(event.gamma || 0);
+        
             if (event.alpha && event.alpha < 320 && event.alpha > 300) {
                 swipe('right');
-                
             }
-            // Alpha の値が 40 から 60 になったら左にスワイプ
             if (event.alpha && event.alpha > 40 && event.alpha < 60) {
                 swipe('left');
-                updateCurrentIndex(currentIndex - 1); // 次のカードに進む
             }
         });
     };
-
+    
     // ジャイロセンサーの権限リクエストと開始
     const requestGyroPermission = async () => {
         if ((DeviceOrientationEvent as any).requestPermission) {

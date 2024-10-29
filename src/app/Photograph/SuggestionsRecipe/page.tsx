@@ -68,6 +68,44 @@ function SuggestionsRecipeComponent() {
         currentIndexRef.current >= index && (childRefs[index].current as any).restoreCard();
     };
 
+    // ジャイロセンサーのデータ取得を開始する関数
+    const startGyro = () => {
+        window.addEventListener('deviceorientation', (event) => {
+            const alpha = event.alpha || 0; // alphaの値を取得（デフォルト0）
+
+            // Alpha の値が 300 から 320 になったら右にスワイプ
+            if (alpha < 320 && alpha > 300) {
+                swipe('right');
+            }
+            // Alpha の値が 40 から 60 になったら左にスワイプ
+            if (alpha > 40 && alpha < 60) {
+                swipe('left');
+            }
+        });
+    };
+
+    // ジャイロセンサーの権限リクエストと開始
+    useEffect(() => {
+        const requestGyroPermission = async () => {
+            if ((DeviceOrientationEvent as any).requestPermission) {
+                try {
+                    const response = await (DeviceOrientationEvent as any).requestPermission();
+                    if (response === 'granted') {
+                        startGyro();
+                    } else {
+                        console.warn('ジャイロデータへのアクセスが拒否されました');
+                    }
+                } catch (error) {
+                    console.error('ジャイロセンサーの権限リクエスト中にエラーが発生しました:', error);
+                }
+            } else {
+                // 権限リクエストが不要な場合は直接開始
+                startGyro();
+            }
+        };
+        requestGyroPermission();
+    }, [currentIndex, data.length]);
+
     useEffect(() => {
         const fetchKeywords = () => {
             const objects = searchParams.get('objects');

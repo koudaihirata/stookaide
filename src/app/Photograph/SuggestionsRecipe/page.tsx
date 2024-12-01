@@ -221,12 +221,12 @@ function SuggestionsRecipeComponent() {
     };
     return (
         <main className={css({ w:'100%',h:'100vh',display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',overflow:'hidden' })}>
-            <button onClick={requestGyroPermission} className={css({ mb: '10px', padding: '10px', background: mainColor, color: white, borderRadius: '5px' })}>ジャイロセンサーの許可</button>
+            {/* <button onClick={requestGyroPermission} className={css({ mb: '10px', padding: '10px', background: mainColor, color: white, borderRadius: '5px' })}>ジャイロセンサーの許可</button>
             <div className={css({ textAlign: 'center', mb: '10px', color: mainColor })}>
                     <p>Alpha: {alpha?.toFixed(2)}</p>
                     <p>Beta: {beta?.toFixed(2)}</p>
                     <p>Gamma: {gamma?.toFixed(2)}</p>
-            </div>
+            </div> */}
             <Progressbar width={80} percent={percent} />
             <div className={css({ width: '80%', height: '450px', m: '15px auto 0', position: 'relative' })}>
                 {loadingStatus && 

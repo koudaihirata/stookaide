@@ -139,7 +139,7 @@ function SuggestionsRecipeComponent() {
                     throw new Error('Invalid API response structure');
                 }
 
-                let parent_dict: { [key: string]: string } = {}; // mediumカテゴリの親カテゴリの辞書
+                let parent_dict: { [key: string]: string } = {};
                 let df: any[] = [];
 
                 for (let category of json_data.result.large) {
